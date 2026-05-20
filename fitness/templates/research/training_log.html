@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Adaptive Training Logs</title>
+
+    <style>
+
+        body{
+            margin:0;
+            padding:0;
+            background:#050816;
+            color:white;
+            font-family:Arial,sans-serif;
+        }
+
+        /* =========================================
+           BACK BUTTON
+        ========================================= */
+
+        .back-button{
+
+            position:fixed;
+
+            top:30px;
+            left:40px;
+
+            color:#5ab0ff;
+
+            text-decoration:none;
+
+            font-size:18px;
+
+            border:1px solid #5ab0ff;
+
+            padding:12px 20px;
+
+            border-radius:12px;
+
+            transition:0.3s;
+
+            z-index:9999;
+        }
+
+        .back-button:hover{
+
+            background:#5ab0ff;
+
+            color:black;
+        }
+
+        /* =========================================
+           CONTAINER
+        ========================================= */
+
+        .training-container{
+
+            width:90%;
+
+            max-width:1400px;
+
+            margin:auto;
+
+            padding-top:120px;
+
+            padding-bottom:100px;
+        }
+
+        h1{
+
+            color:#5ab0ff;
+
+            font-size:68px;
+
+            margin-bottom:30px;
+        }
+
+        .subtitle{
+
+            max-width:1200px;
+
+            font-size:24px;
+
+            line-height:1.9;
+
+            color:#d8e3f0;
+
+            margin-bottom:70px;
+        }
+
+        /* =========================================
+           LOG CARDS
+        ========================================= */
+
+        .logs-grid{
+
+            display:grid;
+
+            grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+            gap:35px;
+
+            margin-bottom:80px;
+        }
+
+        .log-card{
+
+            background:rgba(255,255,255,0.05);
+
+            border:1px solid rgba(90,176,255,0.18);
+
+            border-radius:25px;
+
+            padding:35px;
+
+            transition:0.3s;
+
+            backdrop-filter:blur(10px);
+        }
+
+        .log-card:hover{
+
+            transform:translateY(-6px);
+
+            box-shadow:
+                0 0 35px rgba(90,176,255,0.25);
+        }
+
+        .log-title{
+
+            color:#5ab0ff;
+
+            font-size:32px;
+
+            margin-bottom:25px;
+
+            font-weight:bold;
+        }
+
+        .log-value{
+
+            font-size:58px;
+
+            margin-bottom:20px;
+        }
+
+        .log-description{
+
+            font-size:18px;
+
+            line-height:1.8;
+
+            color:#c7d4e2;
+
+            margin-bottom:25px;
+        }
+
+        /* =========================================
+           MINI BARS
+        ========================================= */
+
+        .mini-bar{
+
+            width:100%;
+
+            height:12px;
+
+            border-radius:20px;
+
+            background:rgba(255,255,255,0.08);
+
+            overflow:hidden;
+        }
+
+        .mini-fill{
+
+            height:100%;
+
+            border-radius:20px;
+
+            background:#5ab0ff;
+        }
+
+        /* =========================================
+           TIMELINE
+        ========================================= */
+
+        .timeline-box{
+
+            padding:45px;
+
+            border-radius:30px;
+
+            background:rgba(255,255,255,0.04);
+
+            border:1px solid rgba(255,255,255,0.08);
+        }
+
+        .timeline-title{
+
+            color:#5ab0ff;
+
+            font-size:40px;
+
+            margin-bottom:45px;
+        }
+
+        .timeline-entry{
+
+            padding:30px;
+
+            margin-bottom:30px;
+
+            border-radius:22px;
+
+            background:rgba(90,176,255,0.05);
+
+            border:1px solid rgba(90,176,255,0.12);
+
+            transition:0.3s;
+        }
+
+        .timeline-entry:hover{
+
+            box-shadow:
+                0 0 25px rgba(90,176,255,0.18);
+        }
+
+        .timeline-date{
+
+            color:#5ab0ff;
+
+            font-size:24px;
+
+            margin-bottom:20px;
+
+            font-weight:bold;
+        }
+
+        .timeline-metrics{
+
+            display:grid;
+
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+            gap:20px;
+        }
+
+        .metric-item{
+
+            background:rgba(255,255,255,0.04);
+
+            padding:20px;
+
+            border-radius:16px;
+        }
+
+        .metric-label{
+
+            color:#8bbfff;
+
+            margin-bottom:10px;
+
+            font-size:16px;
+        }
+
+        .metric-value{
+
+            font-size:26px;
+
+            color:white;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- BACK BUTTON -->
+
+    <a href="/" class="back-button">
+
+        ← Back to Home
+
+    </a>
+
+    <!-- MAIN -->
+
+    <div class="training-container">
+
+        <h1>
+            Adaptive Training Logs
+        </h1>
+
+        <p class="subtitle">
+
+            Longitudinal physiological session tracking,
+            adaptive recovery monitoring,
+            AI-driven workload regulation,
+            and multidimensional neural performance analysis.
+
+        </p>
+
+        <!-- TOP METRICS -->
+
+        <div class="logs-grid">
+
+            <!-- CARD 1 -->
+
+            <div class="log-card">
+
+                <div class="log-title">
+                    Recovery Stability
+                </div>
+
+                <div class="log-value">
+                    92%
+                </div>
+
+                <div class="log-description">
+
+                    Physiological recovery consistency
+                    across adaptive monitoring sessions.
+
+                </div>
+
+                <div class="mini-bar">
+                    <div class="mini-fill" style="width:92%;"></div>
+                </div>
+
+            </div>
+
+            <!-- CARD 2 -->
+
+            <div class="log-card">
+
+                <div class="log-title">
+                    Neural Adaptation
+                </div>
+
+                <div class="log-value">
+                    88%
+                </div>
+
+                <div class="log-description">
+
+                    Dynamic neural response adaptation
+                    under physiological stress conditions.
+
+                </div>
+
+                <div class="mini-bar">
+                    <div class="mini-fill" style="width:88%;"></div>
+                </div>
+
+            </div>
+
+            <!-- CARD 3 -->
+
+            <div class="log-card">
+
+                <div class="log-title">
+                    Training Efficiency
+                </div>
+
+                <div class="log-value">
+                    94%
+                </div>
+
+                <div class="log-description">
+
+                    AI-evaluated physiological training
+                    optimization and adaptive workload control.
+
+                </div>
+
+                <div class="mini-bar">
+                    <div class="mini-fill" style="width:94%;"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TRAINING TIMELINE -->
+
+        <div class="timeline-box">
+
+            <div class="timeline-title">
+
+                Physiological Session Timeline
+
+            </div>
+
+            <!-- SESSION 1 -->
+
+            <div class="timeline-entry">
+
+                <div class="timeline-date">
+                    Session 01 — Recovery Stabilization
+                </div>
+
+                <div class="timeline-metrics">
+
+                    <div class="metric-item">
+
+                        <div class="metric-label">
+                            HRV
+                        </div>
+
+                        <div class="metric-value">
+                            74
+                        </div>
+
+                    </div>
+
+                    <div class="metric-item">
+
+                        <div class="metric-label">
+                            Recovery
+                        </div>
+
+                        <div class="metric-value">
+                            91%
+                        </div>
+
+                    </div>
+
+                    <div class="metric-item">
+
+                        <div class="metric-label">
+                            Fatigue
+                        </div>
+
+                        <div class="metric-value">
+                            Low
+                        </div>
+
+                    </div>
+
+                    <div class="metric-item">
+
+                        <div class="metric-label">
+                            Training Load
+                        </div>
+
+                        <div class="metric-value">
+                            Moderate
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- SESSION 2 -->
+
+            <div class="timeline-entry">
+
+                <div class="timeline-date">
+                    Session 02 — Neural Adaptation
+                </div>
+
+                <div class="timeline-metrics">
+
+                    <div class="metric-item">
+
+                        <div class="metric-label">
+                            HRV
+                        </div>
+
+                        <div class="metric-value">
+                            69
+                        </div>
+
+                    </div>
+
+                    <div class="metric-item">
+
+                        <div class="metric-label">
+                            Recovery
+                        </div>
+
+                        <div class="metric-value">
+                            84%
+                        </div>
+
+                    </div>
+
+                    <div class="metric-item">
+
+                        <div class="metric-label">
+                            Stress Response
+                        </div>
+
+                        <div class="metric-value">
+                            Elevated
+                        </div>
+
+                    </div>
+
+                    <div class="metric-item">
+
+                        <div class="metric-label">
+                            Neural State
+                        </div>
+
+                        <div class="metric-value">
+                            Stable
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- SESSION 3 -->
+
+            <div class="timeline-entry">
+
+                <div class="timeline-date">
+                    Session 03 — Performance Monitoring
+                </div>
+
+                <div class="timeline-metrics">
+
+                    <div class="metric-item">
+
+                        <div class="metric-label">
+                            Endurance
+                        </div>
+
+                        <div class="metric-value">
+                            88%
+                        </div>
+
+                    </div>
+
+                    <div class="metric-item">
+
+                        <div class="metric-label">
+                            Cardiovascular Load
+                        </div>
+
+                        <div class="metric-value">
+                            Stable
+                        </div>
+
+                    </div>
+
+                    <div class="metric-item">
+
+                        <div class="metric-label">
+                            Recovery Trend
+                        </div>
+
+                        <div class="metric-value">
+                            Positive
+                        </div>
+
+                    </div>
+
+                    <div class="metric-item">
+
+                        <div class="metric-label">
+                            Adaptive State
+                        </div>
+
+                        <div class="metric-value">
+                            Optimized
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

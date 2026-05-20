@@ -1,0 +1,556 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dual-Layer Evaluation Architecture</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/research.css' %}">
+
+    <style>
+
+        body{
+            margin:0;
+            padding:0;
+            background:#050816;
+            color:white;
+            font-family:Arial,sans-serif;
+        }
+
+        .research-container{
+            width:90%;
+            max-width:1400px;
+            margin:auto;
+            padding-top:60px;
+            padding-bottom:100px;
+        }
+
+        .back-btn{
+            position:fixed;
+            top:30px;
+            left:40px;
+            color:#5ab0ff;
+            text-decoration:none;
+            border:1px solid #5ab0ff;
+            padding:12px 18px;
+            border-radius:12px;
+            transition:0.3s;
+            z-index:9999;
+        }
+
+        .back-btn:hover{
+            background:#5ab0ff;
+            color:black;
+        }
+
+        .research-image{
+            width:100%;
+            border-radius:30px;
+            margin-top:40px;
+            margin-bottom:50px;
+        }
+
+        .research-content h1{
+            font-size:64px;
+            color:#5ab0ff;
+            margin-bottom:30px;
+        }
+
+        .research-content h2{
+            color:#5ab0ff;
+            margin-top:70px;
+            margin-bottom:25px;
+            font-size:36px;
+        }
+
+        .research-content p{
+            font-size:22px;
+            line-height:1.9;
+            color:#d8e3f0;
+        }
+
+        .research-content li{
+            font-size:21px;
+            line-height:2;
+            color:#d8e3f0;
+        }
+
+        /* =========================================
+           METRIC CARDS
+        ========================================= */
+
+        .metrics-grid{
+
+            display:grid;
+
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+            gap:30px;
+
+            margin-top:50px;
+        }
+
+        .metric-card{
+
+            background:rgba(255,255,255,0.05);
+
+            border:1px solid rgba(90,176,255,0.18);
+
+            border-radius:24px;
+
+            padding:35px;
+
+            backdrop-filter:blur(10px);
+
+            transition:0.3s;
+        }
+
+        .metric-card:hover{
+
+            transform:translateY(-6px);
+
+            box-shadow:
+                0 0 35px rgba(90,176,255,0.22);
+        }
+
+        .metric-title{
+
+            color:#5ab0ff;
+
+            font-size:30px;
+
+            margin-bottom:20px;
+
+            font-weight:bold;
+        }
+
+        .metric-score{
+
+            font-size:64px;
+
+            color:white;
+
+            margin-bottom:15px;
+        }
+
+        .metric-description{
+
+            color:#c7d4e2;
+
+            line-height:1.8;
+
+            font-size:18px;
+        }
+
+        /* =========================================
+           FORMULA BOX
+        ========================================= */
+
+        .formula-box{
+
+            margin-top:40px;
+
+            margin-bottom:40px;
+
+            padding:35px;
+
+            border-radius:24px;
+
+            background:rgba(90,176,255,0.08);
+
+            border:1px solid rgba(90,176,255,0.25);
+
+            font-size:34px;
+
+            color:#5ab0ff;
+
+            overflow-x:auto;
+        }
+
+        /* =========================================
+           VALIDATION CHART
+        ========================================= */
+
+        .chart-box{
+
+            margin-top:60px;
+
+            padding:40px;
+
+            border-radius:30px;
+
+            background:rgba(255,255,255,0.04);
+
+            border:1px solid rgba(255,255,255,0.08);
+        }
+
+        .chart-title{
+
+            font-size:34px;
+
+            color:#5ab0ff;
+
+            margin-bottom:40px;
+        }
+
+        .bar-container{
+
+            margin-bottom:35px;
+        }
+
+        .bar-label{
+
+            margin-bottom:10px;
+
+            font-size:20px;
+        }
+
+        .bar{
+
+            width:100%;
+
+            height:18px;
+
+            border-radius:20px;
+
+            background:rgba(255,255,255,0.08);
+
+            overflow:hidden;
+        }
+
+        .bar-fill{
+
+            height:100%;
+
+            border-radius:20px;
+
+            background:#5ab0ff;
+        }
+
+        /* =========================================
+           DIAGRAM
+        ========================================= */
+
+        .diagram-box{
+
+            margin-top:70px;
+
+            padding:50px;
+
+            border-radius:30px;
+
+            background:rgba(255,255,255,0.04);
+
+            border:1px solid rgba(255,255,255,0.08);
+
+            text-align:center;
+        }
+
+        .diagram-title{
+
+            color:#5ab0ff;
+
+            font-size:36px;
+
+            margin-bottom:50px;
+        }
+
+        .diagram-flow{
+
+            display:flex;
+
+            justify-content:center;
+
+            align-items:center;
+
+            gap:30px;
+
+            flex-wrap:wrap;
+        }
+
+        .diagram-node{
+
+            padding:30px;
+
+            border-radius:22px;
+
+            background:rgba(90,176,255,0.08);
+
+            border:1px solid rgba(90,176,255,0.25);
+
+            min-width:220px;
+
+            font-size:22px;
+        }
+
+        .arrow{
+
+            font-size:40px;
+
+            color:#5ab0ff;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="research-container">
+
+    <!-- BACK BUTTON -->
+
+    <a href="{% url 'home' %}"
+       class="back-btn">
+
+        ← Back to Home
+
+    </a>
+
+    <!-- HERO IMAGE -->
+
+    <img src="{% static 'images/dual_layer.png' %}"
+         class="research-image">
+
+    <!-- CONTENT -->
+
+    <div class="research-content">
+
+        <h1>
+            Dual-Layer Evaluation Architecture
+        </h1>
+
+        <p>
+            Advanced physiological AI validation framework
+            combining real physiological stability metrics,
+            synthetic physiological simulation,
+            adaptive prediction consistency analysis,
+            and multidimensional evaluation pipelines.
+        </p>
+
+        <!-- METRIC CARDS -->
+
+        <div class="metrics-grid">
+
+            <div class="metric-card">
+
+                <div class="metric-title">
+                    Stability Score
+                </div>
+
+                <div class="metric-score">
+                    94%
+                </div>
+
+                <div class="metric-description">
+                    Longitudinal physiological consistency
+                    across adaptive monitoring sessions.
+                </div>
+
+            </div>
+
+            <div class="metric-card">
+
+                <div class="metric-title">
+                    Synthetic Accuracy
+                </div>
+
+                <div class="metric-score">
+                    91%
+                </div>
+
+                <div class="metric-description">
+                    Synthetic physiological simulation
+                    alignment with neural predictions.
+                </div>
+
+            </div>
+
+            <div class="metric-card">
+
+                <div class="metric-title">
+                    Latent Reliability
+                </div>
+
+                <div class="metric-score">
+                    89%
+                </div>
+
+                <div class="metric-description">
+                    Hidden physiological state
+                    validation consistency.
+                </div>
+
+            </div>
+
+        </div>
+
+        <h2>
+            Mathematical Foundation
+        </h2>
+
+        <div class="formula-box">
+
+            score_total = α · stability_score + β · synthetic_score
+
+        </div>
+
+        <div class="formula-box">
+
+            stability = Var(y_t)^(-1)
+
+        </div>
+
+        <div class="formula-box">
+
+            synthetic_error = |y_pred − y_sim|
+
+        </div>
+
+        <!-- VALIDATION CHART -->
+
+        <div class="chart-box">
+
+            <div class="chart-title">
+
+                Validation Metrics
+
+            </div>
+
+            <div class="bar-container">
+
+                <div class="bar-label">
+                    Stability Consistency
+                </div>
+
+                <div class="bar">
+                    <div class="bar-fill" style="width:94%;"></div>
+                </div>
+
+            </div>
+
+            <div class="bar-container">
+
+                <div class="bar-label">
+                    Synthetic Validation
+                </div>
+
+                <div class="bar">
+                    <div class="bar-fill" style="width:91%;"></div>
+                </div>
+
+            </div>
+
+            <div class="bar-container">
+
+                <div class="bar-label">
+                    Physiological Reliability
+                </div>
+
+                <div class="bar">
+                    <div class="bar-fill" style="width:88%;"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- DIAGRAM -->
+
+        <div class="diagram-box">
+
+            <div class="diagram-title">
+
+                Synthetic vs Stability Pipeline
+
+            </div>
+
+            <div class="diagram-flow">
+
+                <div class="diagram-node">
+                    Physiological Inputs
+                </div>
+
+                <div class="arrow">
+                    →
+                </div>
+
+                <div class="diagram-node">
+                    Stability Metrics
+                </div>
+
+                <div class="arrow">
+                    →
+                </div>
+
+                <div class="diagram-node">
+                    Synthetic Simulation
+                </div>
+
+                <div class="arrow">
+                    →
+                </div>
+
+                <div class="diagram-node">
+                    Final Evaluation
+                </div>
+
+            </div>
+
+        </div>
+
+        <h2>
+            Applications
+        </h2>
+
+        <ul>
+
+            <li>
+                Physiological AI benchmarking
+            </li>
+
+            <li>
+                Neural prediction validation
+            </li>
+
+            <li>
+                Adaptive physiological testing
+            </li>
+
+            <li>
+                Stability-performance estimation
+            </li>
+
+            <li>
+                Explainable AI verification
+            </li>
+
+        </ul>
+
+        <h2>
+            Future Directions
+        </h2>
+
+        <p>
+            Future development includes
+            hypercomplex validation operators,
+            quaternion evaluation metrics,
+            quantum-inspired physiological verification,
+            adaptive latent-space benchmarking,
+            and multidimensional AI reliability systems.
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

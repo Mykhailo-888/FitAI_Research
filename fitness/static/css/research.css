@@ -1,0 +1,174 @@
+body{
+    margin:0;
+
+    background:
+        linear-gradient(180deg,#050816,#0b1026);
+
+    font-family:Arial,sans-serif;
+
+    color:white;
+}
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.research-container{
+    width:88%;
+
+    margin:auto;
+
+    padding-top:50px;
+
+    padding-bottom:80px;
+}
+
+/* =========================================
+   IMAGE
+========================================= */
+
+.research-image{
+    width:100%;
+
+    border-radius:28px;
+
+    display:block;
+
+    box-shadow:
+        0 0 40px rgba(0,140,255,0.25);
+}
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.research-content{
+    margin-top:45px;
+
+    background:
+        rgba(255,255,255,0.04);
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius:24px;
+
+    padding:45px;
+
+    backdrop-filter:blur(10px);
+}
+
+/* =========================================
+   TITLES
+========================================= */
+
+h1{
+    font-size:52px;
+
+    margin-bottom:25px;
+
+    color:#7ec8ff;
+}
+
+h2{
+    margin-top:40px;
+
+    color:#59b7ff;
+}
+
+/* =========================================
+   TEXT
+========================================= */
+
+p{
+    line-height:1.8;
+
+    font-size:19px;
+
+    color:#d7e7ff;
+}
+
+/* =========================================
+   LIST
+========================================= */
+
+ul{
+    margin-top:20px;
+}
+
+li{
+    margin-bottom:12px;
+
+    color:#cfe5ff;
+
+    font-size:18px;
+}
+/* =========================================
+   BACK BUTTON
+========================================= */
+
+.back-btn{
+    display:inline-block;
+
+    margin-bottom:30px;
+
+    padding:
+        14px 24px;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius:16px;
+
+    color:#7ec8ff;
+
+    text-decoration:none;
+
+    font-size:17px;
+
+    transition:0.25s ease;
+
+    backdrop-filter:blur(8px);
+}
+
+.back-btn:hover{
+    transform:translateY(-2px);
+
+    background:
+        rgba(255,255,255,0.1);
+
+    box-shadow:
+        0 0 24px rgba(0,140,255,0.25);
+}
+/* =========================================================
+   PARAMETER BLOCKS
+========================================================= */
+
+.research-content h3{
+
+    margin-top:40px;
+
+    color:#6bb6ff;
+
+    font-size:28px;
+}
+
+.research-content p{
+
+    line-height:1.8;
+}
+
+.research-content ul{
+
+    padding-left:25px;
+
+    line-height:1.8;
+}
+
+.research-content strong{
+
+    color:#8fd0ff;
+}

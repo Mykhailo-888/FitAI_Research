@@ -1,0 +1,198 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        FitAI
+    </title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+<div class="hero-section">
+
+    <!-- BASE IMAGE -->
+
+    <img src="{% static 'images/hero_fitai.png' %}"
+         class="hero-image">
+
+    <!-- CLICKABLE HOTSPOTS -->
+
+    <div class="click-layer">
+
+        <!-- =====================================================
+             TOP NAV
+        ====================================================== -->
+
+        <!-- DASHBOARD -->
+
+        <a href="{% url 'dashboard_overview' %}"
+           class="hotspot nav-dashboard"></a>
+
+        <!-- MONITORING -->
+
+        <a href="{% url 'monitoring_dashboard' %}"
+           class="hotspot nav-monitoring"></a>
+
+        <!-- MODELS OVERVIEW -->
+
+        <a href="{% url 'models_overview' %}"
+           class="hotspot nav-models"></a>
+
+        <!-- RESEARCH OVERVIEW -->
+
+        <a href="{% url 'dual_layer_evaluation' %}"
+           class="hotspot nav-metrics"></a>
+
+        <!-- LATENT ENGINE -->
+
+        <a href="{% url 'latent_states' %}"
+           class="hotspot nav-latent"></a>
+
+        <!-- OPENCV -->
+
+        <a href="{% url 'opencv_analysis' %}"
+           class="hotspot nav-opencv"></a>
+
+        <!-- TRAINING -->
+
+        <a href="{% url 'training_logs' %}"
+           class="hotspot nav-training"></a>
+
+        <!-- ABOUT FITAI -->
+
+        <a href="{% url 'about_fitai' %}"
+           class="hotspot nav-about"></a>
+
+        <!-- GET STARTED -->
+
+        <a href="{% url 'onboarding' %}"
+           class="hotspot nav-get-started"></a>
+
+        <!-- =====================================================
+             23 PARAMETERS BLOCK
+        ====================================================== -->
+
+        <a href="{% url 'physiological_parameters' %}"
+           class="hotspot parameters-block"></a>
+
+        <!-- =====================================================
+             ROW 1
+        ====================================================== -->
+
+        <!-- BLOCK 1 -->
+
+        <a href="{% url 'stochastic_dynamics' %}"
+           class="hotspot feature-image block-1">
+
+            <img src="{% static 'images/stochastic.png' %}"
+                 alt="Stochastic Dynamics">
+
+        </a>
+
+        <!-- BLOCK 2 -->
+
+        <a href="{% url 'hjb_predictor' %}"
+           class="hotspot feature-image block-2">
+
+            <img src="{% static 'images/hjb.png' %}"
+                 alt="HJB Predictor">
+
+        </a>
+
+        <!-- BLOCK 3 -->
+
+        <a href="{% url 'latent_states' %}"
+           class="hotspot feature-image block-3">
+
+            <img src="{% static 'images/latent.png' %}"
+                 alt="Latent States">
+
+        </a>
+
+        <!-- =====================================================
+             ROW 2
+        ====================================================== -->
+
+        <!-- BLOCK 4 -->
+
+        <a href="{% url 'signal_flow' %}"
+           class="hotspot feature-image block-4">
+
+            <img src="{% static 'images/signal_flow.png' %}"
+                 alt="Signal Flow">
+
+        </a>
+
+        <!-- BLOCK 5 -->
+
+        <a href="{% url 'response_analysis' %}"
+           class="hotspot feature-image block-5">
+
+            <img src="{% static 'images/response_analysis.png' %}"
+                 alt="Response Analysis">
+
+        </a>
+
+        <!-- BLOCK 6 -->
+
+        <a href="{% url 'dual_layer_evaluation' %}"
+           class="hotspot feature-image block-6">
+
+            <img src="{% static 'images/dual_layer.png' %}"
+                 alt="Dual Layer">
+
+        </a>
+
+        <!-- =====================================================
+             ROW 3
+        ====================================================== -->
+
+        <!-- BLOCK 7 -->
+
+        <a href="{% url 'custom_neural_network' %}"
+           class="hotspot feature-image block-7">
+
+            <img src="{% static 'images/custom_nn.png' %}"
+                 alt="Custom Neural Network">
+
+        </a>
+
+        <!-- BLOCK 8 -->
+
+        <a href="{% url 'opencv_analysis' %}"
+           class="hotspot feature-image block-8">
+
+            <img src="{% static 'images/open_cv.png' %}"
+                 alt="OpenCV Analysis">
+
+        </a>
+
+        <!-- BLOCK 9 -->
+
+        <a href="{% url 'monitoring_dashboard' %}"
+           class="hotspot feature-image block-9">
+
+            <img src="{% static 'images/monitoring.png' %}"
+                 alt="Monitoring Dashboard">
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

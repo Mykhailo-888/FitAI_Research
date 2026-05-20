@@ -4,7 +4,7 @@ import numpy as np
 np.random.seed(42)
 print("\n" + 30 * " "  + "FINAL DATASET" + 30 * " ")
 
-original_file = r"C:\FitAI_django\data\gym_members_exercise_tracking.csv"
+original_file = r"C:\FitAI_Research\data\gym_members_exercise_tracking.csv"
 df = pd.read_csv(original_file)
 
 params_23 = [

@@ -16,6 +16,11 @@ from ml.training_risk import predict_risk
 from ml.photo_analysis import analyze_body_proportions
 
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+from django.shortcuts import render
+
+def home_view(request):
+    return render(request, "home.html")
 # -----------------------------
 # Helper: validate numeric input
 # -----------------------------
@@ -515,8 +520,8 @@ def history(request):
     return render(request, 'history.html', context)
 
 def training_log_view(request):
-    feature_file = Path(r"C:/FitAI_django/ml/feature_importance.json")
-    training_file = Path(r"C:/FitAI_django/ml/training_history.json")
+    feature_file = Path(r"C:/FitAI_Research/ml/feature_importance.json")
+    training_file = Path(r"C:/FitAI_Research/ml/training_history.json")
 
     features = {}
     history = {}
@@ -683,3 +688,74 @@ def synthetic_ground_truth(x, i):
         return 380 + sleep * 18 - stress * 22 + (hrv / 3)
 
     return 0.0
+
+# =========================================
+# RESEARCH PAGES
+# =========================================
+
+def stochastic_dynamics(request):
+    return render(request, 'research/stochastic.html')
+
+
+def hjb_predictor(request):
+    return render(request, 'research/hjb.html')
+
+
+def latent_states(request):
+    return render(request, 'research/latent.html')
+
+
+def custom_neural_network(request):
+    return render(request, 'research/custom_nn.html')
+
+
+def signal_flow(request):
+    return render(request, 'research/signal_flow.html')
+
+
+def response_analysis(request):
+    return render(request, 'research/response_analysis.html')
+
+
+def dual_layer_evaluation(request):
+    return render(request, 'research/dual_layer.html')
+
+
+def monitoring_dashboard(request):
+    return render(request, 'research/dashboard.html')
+
+
+def opencv_analysis(request):
+    return render(request, 'research/open_cv.html')
+
+
+def physiological_parameters(request):
+    return render(request, 'research/parameters.html')
+def research_overview(request):
+    return render(request, 'research/research_overview.html')
+
+
+def models_overview(request):
+    return render(request, 'research/models_overview.html')
+
+
+def about_fitai(request):
+    return render(request, 'research/about_fitai.html')
+def dashboard_overview(request):
+    return render(request, 'research/dashboard_overview.html')
+def custom_nn_view(request):
+    return render(request, "research/custom_nn.html")
+
+
+def hjb_view(request):
+    return render(request, "research/hjb.html")
+
+
+def latent_view(request):
+    return render(request, "research/latent.html")
+
+
+def hypercomplex_view(request):
+    return render(request, "research/hypercomplex.html")
+def training_log_view(request):
+    return render(request, 'research/training_log.html')

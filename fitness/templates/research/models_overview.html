@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>FitAI Models</title>
+
+    <style>
+
+        body{
+            margin:0;
+            padding:0;
+            background:#050816;
+            color:white;
+            font-family:Arial,sans-serif;
+        }
+
+        .back-button{
+            position:fixed;
+            top:30px;
+            left:40px;
+            color:#5ab0ff;
+            text-decoration:none;
+            font-size:18px;
+            border:1px solid #5ab0ff;
+            padding:10px 18px;
+            border-radius:12px;
+            transition:0.3s;
+            z-index:9999;
+        }
+
+        .back-button:hover{
+            background:#5ab0ff;
+            color:black;
+        }
+
+        .models-container{
+            width:90%;
+            max-width:1300px;
+            margin:auto;
+            padding-top:120px;
+            padding-bottom:80px;
+        }
+
+        h1{
+            font-size:56px;
+            color:#5ab0ff;
+            margin-bottom:20px;
+        }
+
+        .subtitle{
+            font-size:20px;
+            line-height:1.7;
+            color:#c7d4e2;
+            max-width:1000px;
+        }
+
+        .models-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:30px;
+            margin-top:60px;
+        }
+
+        .model-card{
+            background:rgba(255,255,255,0.05);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:22px;
+            padding:30px;
+            backdrop-filter:blur(10px);
+            transition:0.3s;
+            text-decoration:none;
+            color:white;
+            display:block;
+        }
+
+        .model-card:hover{
+            transform:translateY(-6px);
+            border-color:#5ab0ff;
+            box-shadow:0 0 25px rgba(90,176,255,0.25);
+        }
+
+        .card-icon{
+            color:#5ab0ff;
+            font-size:26px;
+            margin-bottom:15px;
+        }
+
+        .model-card h2{
+            color:#5ab0ff;
+            margin-bottom:18px;
+            font-size:34px;
+        }
+
+        .model-card p{
+            color:#d6e2f0;
+            line-height:1.8;
+            font-size:18px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <a href="/" class="back-button">← Back</a>
+
+    <div class="models-container">
+
+        <h1>Models</h1>
+
+        <p class="subtitle">
+            Adaptive physiological intelligence models designed for nonlinear prediction,
+            latent-state estimation, and dynamic recovery optimization.
+        </p>
+
+        <div class="models-grid">
+
+            <a href="/custom-nn/" class="model-card">
+
+                <div class="card-icon">◉</div>
+
+                <h2>Custom NumPy Neural Network</h2>
+
+                <p>
+                    Custom physiological neural architecture with constrained outputs,
+                    adaptive learning, and feature sensitivity analysis.
+                </p>
+
+            </a>
+
+            <a href="/hjb/" class="model-card">
+
+                <div class="card-icon">◉</div>
+
+                <h2>Hamilton–Jacobi Predictor</h2>
+
+                <p>
+                    Dynamic physiological optimization system for recovery control,
+                    fatigue reduction, and adaptive trajectory simulation.
+                </p>
+
+            </a>
+
+            <a href="/latent/" class="model-card">
+
+                <div class="card-icon">◉</div>
+
+                <h2>Latent State Engine</h2>
+
+                <p>
+                    Hidden physiological state modeling using latent recovery,
+                    stress, rhythm, and adaptation representations.
+                </p>
+
+            </a>
+
+            <a href="/hypercomplex/" class="model-card">
+
+                <div class="card-icon">◉</div>
+
+                <h2>Hypercomplex Research</h2>
+
+                <p>
+                    Future hypercomplex physiological modeling using quaternion
+                    latent operators and multidimensional state coupling.
+                </p>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

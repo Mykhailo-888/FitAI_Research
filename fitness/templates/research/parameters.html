@@ -1,0 +1,956 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        23 Physiological Parameters
+    </title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/research.css' %}">
+
+</head>
+
+<body>
+
+<div class="research-container">
+
+    <!-- BACK BUTTON -->
+
+    <a href="{% url 'home' %}"
+       class="back-btn">
+
+        ← Back to Home
+
+    </a>
+
+    <!-- HERO IMAGE -->
+
+    <img src="{% static 'images/parameters.png' %}"
+         class="research-image">
+
+    <!-- CONTENT -->
+
+    <div class="research-content">
+
+        <h1>
+            23 Physiological Parameters
+        </h1>
+
+        <p>
+            The FitAI physiological engine integrates
+            23 multidimensional physiological parameters
+            describing cardiovascular adaptation,
+            endurance capacity,
+            metabolic regulation,
+            hormonal balance,
+            recovery dynamics,
+            inflammation,
+            stress physiology,
+            and latent physiological stability.
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 1 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            1. Age
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            years<br>
+
+            <strong>Normal:</strong>
+            depends on biological stage<br>
+
+            <strong>Description:</strong>
+            Used for physiological adaptation scaling,
+            recovery estimation,
+            hormonal normalization,
+            and age-dependent cardiovascular modeling.<br>
+
+            <strong>AI Interpretation:</strong>
+            Influences adaptive recovery speed,
+            fatigue accumulation,
+            and physiological resilience.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 2 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            2. Height
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            cm<br>
+
+            <strong>Normal:</strong>
+            population dependent<br>
+
+            <strong>Description:</strong>
+            Used for body-ratio analysis,
+            proportional normalization,
+            and biomechanical estimation.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used in body composition
+            and OpenCV proportional analysis.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 3 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            3. Weight
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            kg<br>
+
+            <strong>Normal:</strong>
+            depends on height/body composition<br>
+
+            <strong>Description:</strong>
+            Represents total body mass,
+            metabolic demand,
+            and training-load scaling.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for adaptive calorie estimation
+            and recovery-energy modeling.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 4 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            4. Waist Circumference
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            cm<br>
+
+            <strong>Normal:</strong>
+            Men: &lt;94 cm<br>
+            Women: &lt;80 cm<br>
+
+            <strong>Description:</strong>
+            Indicates visceral fat accumulation,
+            metabolic health,
+            and cardiovascular risk.<br>
+
+            <strong>High Values:</strong>
+            increased metabolic syndrome risk,
+            insulin resistance,
+            cardiovascular strain.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for body-composition analysis
+            and latent metabolic-state estimation.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 5 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            5. Emotional Stress
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            score (0–100)<br>
+
+            <strong>Normal:</strong>
+            0–35 low stress<br>
+
+            <strong>High:</strong>
+            chronic stress,
+            cortisol elevation,
+            sympathetic dominance.<br>
+
+            <strong>Description:</strong>
+            Represents psychological and physiological stress load.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used in stochastic stress dynamics
+            and latent stress-state modeling.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 6 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            6. Alcohol (units/week)
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            units/week<br>
+
+            <strong>Normal:</strong>
+            0–5 low intake<br>
+
+            <strong>High:</strong>
+            recovery impairment,
+            hormonal disruption,
+            volatility increase.<br>
+
+            <strong>Description:</strong>
+            Models alcohol-induced nonlinear physiological drift.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used inside stochastic physiological dynamics
+            and recovery-risk estimation.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 7 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            7. Daily Calories
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            kcal/day<br>
+
+            <strong>Normal:</strong>
+            1800–3200 kcal/day<br>
+
+            <strong>Description:</strong>
+            Represents energy intake,
+            recovery support,
+            and metabolic adaptation.<br>
+
+            <strong>Low Intake:</strong>
+            fatigue,
+            catabolism,
+            poor recovery.<br>
+
+            <strong>High Intake:</strong>
+            fat accumulation,
+            metabolic overload.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for adaptive metabolic regulation.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 8 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            8. Max Push-Ups
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            repetitions<br>
+
+            <strong>Normal:</strong>
+            20–50 repetitions<br>
+
+            <strong>Description:</strong>
+            Upper-body muscular endurance indicator.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for strength prediction
+            and fatigue-resistance estimation.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 9 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            9. Max Pull-Ups
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            repetitions<br>
+
+            <strong>Normal:</strong>
+            5–20 repetitions<br>
+
+            <strong>Description:</strong>
+            Relative strength
+            and neuromuscular performance metric.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for strength-adaptation modeling.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 10 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            10. 1 km Run
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            seconds<br>
+
+            <strong>Normal:</strong>
+            210–360 sec<br>
+
+            <strong>Description:</strong>
+            Cardiovascular endurance
+            and aerobic-capacity indicator.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for endurance prediction.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 11 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            11. 100 m Run
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            seconds<br>
+
+            <strong>Normal:</strong>
+            11–18 sec<br>
+
+            <strong>Description:</strong>
+            Explosive power
+            and anaerobic adaptation metric.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for speed-power estimation.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 12 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            12. Cooper Test
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            meters<br>
+
+            <strong>Normal:</strong>
+            1800–3200 m<br>
+
+            <strong>Description:</strong>
+            Aerobic endurance
+            and oxygen-utilization indicator.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for endurance-state estimation
+            and latent energy-state synthesis.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 13 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            13. Burpees in 3 min
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            repetitions<br>
+
+            <strong>Normal:</strong>
+            40–90 repetitions<br>
+
+            <strong>Description:</strong>
+            Integrated fatigue,
+            endurance,
+            and recovery-capacity metric.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for physiological resilience analysis.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 14 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            14. Push-Ups in 1 min
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            repetitions<br>
+
+            <strong>Normal:</strong>
+            20–60 repetitions<br>
+
+            <strong>Description:</strong>
+            Muscular endurance
+            and fatigue-resistance parameter.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for adaptive endurance modeling.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 15 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            15. Sleep
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            hours/night<br>
+
+            <strong>Normal:</strong>
+            7–9 hours<br>
+
+            <strong>Low:</strong>
+            recovery impairment,
+            cortisol elevation,
+            fatigue accumulation.<br>
+
+            <strong>Description:</strong>
+            Primary recovery-state parameter.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used in latent recovery-state estimation.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 16 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            16. Resting Heart Rate
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            BPM<br>
+
+            <strong>Normal:</strong>
+            50–75 BPM<br>
+
+            <strong>High:</strong>
+            cardiovascular stress,
+            fatigue,
+            poor recovery.<br>
+
+            <strong>Description:</strong>
+            Cardiovascular efficiency indicator.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for cardiovascular adaptation analysis.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 17 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            17. Systolic Blood Pressure
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            mmHg<br>
+
+            <strong>Normal:</strong>
+            110–130 mmHg<br>
+
+            <strong>High:</strong>
+            cardiovascular risk,
+            vascular strain.<br>
+
+            <strong>Description:</strong>
+            Hemodynamic-pressure parameter.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for physiological risk estimation.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 18 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            18. Mitochondria
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            latent efficiency score<br>
+
+            <strong>Description:</strong>
+            Represents ATP-production efficiency,
+            oxidative phosphorylation quality,
+            and endurance-energy dynamics.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for latent energy-state modeling
+            and endurance-capacity prediction.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 19 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            19. Testosterone
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            ng/dL<br>
+
+            <strong>Normal:</strong>
+            300–1000 ng/dL<br>
+
+            <strong>Low:</strong>
+            fatigue,
+            low recovery,
+            catabolism.<br>
+
+            <strong>Description:</strong>
+            Hormonal adaptation
+            and anabolic-state parameter.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for recovery and strength estimation.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 20 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            20. Cortisol
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            μg/dL<br>
+
+            <strong>Normal:</strong>
+            6–23 μg/dL<br>
+
+            <strong>High:</strong>
+            chronic stress,
+            fatigue accumulation,
+            catabolic dominance.<br>
+
+            <strong>Description:</strong>
+            Primary stress-hormone parameter.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used in stochastic stress modeling.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 21 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            21. Hemoglobin
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            g/dL<br>
+
+            <strong>Normal:</strong>
+            13.5–17.5 g/dL<br>
+
+            <strong>Low:</strong>
+            oxygen-transport impairment,
+            fatigue,
+            endurance reduction.<br>
+
+            <strong>Description:</strong>
+            Oxygen transport capacity indicator.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for endurance-state estimation.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 22 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            22. CRP (C-Reactive Protein)
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            mg/L<br>
+
+            <strong>Normal:</strong>
+            &lt;3 mg/L<br>
+
+            <strong>High:</strong>
+            systemic inflammation,
+            recovery impairment,
+            physiological stress.<br>
+
+            <strong>Description:</strong>
+            Inflammatory-state marker.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for adaptive recovery-risk analysis.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- 23 -->
+        <!-- ===================================================== -->
+
+        <h3>
+            23. HRV (Heart Rate Variability)
+        </h3>
+
+        <p>
+
+            <strong>Units:</strong>
+            milliseconds (ms)<br>
+
+            <strong>Normal:</strong>
+            50–100 ms<br>
+
+            <strong>Low:</strong>
+            stress,
+            fatigue,
+            autonomic imbalance.<br>
+
+            <strong>High:</strong>
+            strong recovery,
+            autonomic flexibility,
+            adaptive resilience.<br>
+
+            <strong>Description:</strong>
+            Autonomic nervous system balance indicator.<br>
+
+            <strong>AI Interpretation:</strong>
+            Used for recovery-state estimation
+            and latent physiological stability modeling.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- LATENT STATES -->
+        <!-- ===================================================== -->
+
+        <h2>
+            Latent Physiological States
+        </h2>
+
+        <p>
+            Beyond directly observable physiological measurements,
+            FitAI constructs engineered latent physiological states
+            representing hidden multidimensional physiological dynamics
+            that cannot be measured explicitly from raw inputs alone.
+        </p>
+
+        <p>
+
+            z =
+            [z_energy,
+            z_stress,
+            z_recovery,
+            z_rhythm]^T
+
+        </p>
+
+        <p>
+            The latent-state engine transforms
+            observable physiological signals
+            x ∈ ℝ²³
+            into compact hidden physiological representations
+            z ∈ ℝ⁶⁴
+            using adaptive embedding layers,
+            nonlinear feature synthesis,
+            and multidimensional physiological encoding.
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- z_energy -->
+        <!-- ===================================================== -->
+
+        <h3>
+            z_energy
+        </h3>
+
+        <p>
+
+            Hidden metabolic-energy representation
+            synthesizing:
+            HRV,
+            Cooper performance,
+            mitochondrial efficiency,
+            oxygen utilization,
+            ATP-production dynamics,
+            and endurance adaptation.
+
+        </p>
+
+        <p>
+
+            Represents the internal physiological energy state
+            responsible for endurance stability,
+            recovery efficiency,
+            metabolic capacity,
+            and adaptive physical performance.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- z_stress -->
+        <!-- ===================================================== -->
+
+        <h3>
+            z_stress
+        </h3>
+
+        <p>
+
+            Hidden stress-load representation
+            integrating:
+            cortisol,
+            emotional stress,
+            CRP,
+            blood pressure,
+            autonomic instability,
+            and inflammatory physiological signals.
+
+        </p>
+
+        <p>
+
+            Models nonlinear physiological stress accumulation,
+            sympathetic activation,
+            adaptive overload,
+            and hidden stress-response dynamics.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- z_recovery -->
+        <!-- ===================================================== -->
+
+        <h3>
+            z_recovery
+        </h3>
+
+        <p>
+
+            Adaptive recovery-state representation
+            combining:
+            sleep quality,
+            HRV,
+            recovery dynamics,
+            training load,
+            mitochondrial restoration,
+            and physiological regeneration.
+
+        </p>
+
+        <p>
+
+            Represents the body's hidden recovery potential,
+            adaptive restoration capacity,
+            and long-term physiological stabilization mechanisms.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- z_rhythm -->
+        <!-- ===================================================== -->
+
+        <h3>
+            z_rhythm
+        </h3>
+
+        <p>
+
+            Circadian and biological-rhythm representation
+            modeling:
+            recovery oscillations,
+            sleep cycles,
+            autonomic periodicity,
+            hormonal timing,
+            and physiological synchronization dynamics.
+
+        </p>
+
+        <p>
+
+            Captures periodic biological fluctuations
+            and adaptive temporal physiological patterns
+            affecting recovery,
+            stress regulation,
+            and performance consistency.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- LATENT ADVANTAGES -->
+        <!-- ===================================================== -->
+
+        <h2>
+            Latent-State Advantages
+        </h2>
+
+        <ul>
+
+            <li>
+                Hidden physiological-state estimation
+            </li>
+
+            <li>
+                Noise and fluctuation suppression
+            </li>
+
+            <li>
+                Personalized physiological adaptation
+            </li>
+
+            <li>
+                Improved prediction stability
+            </li>
+
+            <li>
+                Compact multidimensional representation learning
+            </li>
+
+            <li>
+                Adaptive physiological forecasting
+            </li>
+
+        </ul>
+
+        <!-- ===================================================== -->
+        <!-- NOISE REDUCTION -->
+        <!-- ===================================================== -->
+
+        <h2>
+            Physiological Noise Reduction
+        </h2>
+
+        <p>
+
+            Latent physiological states
+            help suppress unstable fluctuations,
+            noisy measurements,
+            and temporary physiological disturbances
+            by projecting raw physiological signals
+            into a stable hidden-state representation space.
+
+        </p>
+
+        <!-- ===================================================== -->
+        <!-- FUTURE EVOLUTION -->
+        <!-- ===================================================== -->
+
+        <h2>
+            Future Hypercomplex Evolution
+        </h2>
+
+        <p>
+
+            Future versions of FitAI
+            will extend latent physiological states
+            using quaternion and hypercomplex operators
+            for multidimensional coupled physiological dynamics,
+            adaptive hidden-state interactions,
+            and advanced nonlinear physiological modeling.
+
+        </p>
+
+        <p>
+
+            Planned future architecture includes
+            quantum-inspired physiological states,
+            hypercomplex latent transitions,
+            coupled recovery-energy dynamics,
+            and multidimensional physiological control systems.
+
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

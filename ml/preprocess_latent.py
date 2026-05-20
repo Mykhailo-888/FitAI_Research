@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import os
 
-input_file = r"C:\FitAI_django\data\edited_23_params_realistic.csv"
+input_file = r"C:\FitAI_Research\data\edited_23_params_realistic.csv"
 
 if not os.path.exists(input_file):
     print("Error: base dataset not found!")
@@ -16,7 +16,7 @@ print("=== LATENT DATASET (FINAL VERSION — FIXED) ===")
 # ─────────────────────────────
 # LOAD BASE DATASET
 # ─────────────────────────────
-input_file = r"C:\FitAI_django\data\edited_23_params_realistic.csv"
+input_file = r"C:\FitAI_Research\data\edited_23_params_realistic.csv"
 df = pd.read_csv(input_file)
 df_new = df.copy()
 
@@ -91,7 +91,7 @@ df_new = df_new.fillna(df_new.mean(numeric_only=True))
 # ─────────────────────────────
 # SAVE
 # ─────────────────────────────
-output_file = r"C:\FitAI_django\data\edited_23_params_realistic_latent.csv"
+output_file = r"C:\FitAI_Research\data\edited_23_params_realistic_latent.csv"
 df_new.to_csv(output_file, index=False)
 
 # ─────────────────────────────

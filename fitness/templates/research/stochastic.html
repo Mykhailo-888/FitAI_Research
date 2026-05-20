@@ -1,0 +1,134 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Stochastic Dynamics</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/research.css' %}">
+
+</head>
+
+<body>
+
+<div class="research-container">
+
+    <!-- BACK BUTTON -->
+
+    <a href="{% url 'home' %}"
+       class="back-btn">
+
+        ← Back to Home
+
+    </a>
+
+    <!-- HERO IMAGE -->
+
+    <img src="{% static 'images/stochastic.png' %}"
+         class="research-image">
+
+    <!-- CONTENT -->
+
+    <div class="research-content">
+
+        <h1>
+            Stochastic Physiological Dynamics
+        </h1>
+
+        <p>
+            Advanced stochastic physiological modeling
+            using Itô stochastic differential equations,
+            adaptive recovery optimization,
+            nonlinear alcohol drift estimation,
+            and Monte Carlo uncertainty simulation.
+        </p>
+
+        <h2>
+            Core Components
+        </h2>
+
+        <ul>
+
+            <li>
+                Itô stochastic differential equations
+            </li>
+
+            <li>
+                Monte Carlo trajectory simulation
+            </li>
+
+            <li>
+                Adaptive physiological recovery
+            </li>
+
+            <li>
+                Alcohol-induced nonlinear drift
+            </li>
+
+            <li>
+                Physiological volatility estimation
+            </li>
+
+        </ul>
+
+        <h2>
+            Mathematical Foundation
+        </h2>
+
+        <p>
+            dS_t =
+            [κ(θ − S_t) + μS_t + alcohol_drift]dt
+            + σ_eff(S_t)dW_t
+        </p>
+
+        <h2>
+            Applications
+        </h2>
+
+        <ul>
+
+            <li>
+                Adaptive physiological monitoring
+            </li>
+
+            <li>
+                Cardiovascular stress forecasting
+            </li>
+
+            <li>
+                Recovery trajectory prediction
+            </li>
+
+            <li>
+                AI-assisted physiological optimization
+            </li>
+
+        </ul>
+
+        <h2>
+            System Architecture
+        </h2>
+
+        <p>
+            The stochastic module integrates
+            physiological signals, recovery metrics,
+            alcohol exposure estimation, and adaptive
+            volatility control into a continuous
+            probabilistic physiological simulation
+            framework.
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

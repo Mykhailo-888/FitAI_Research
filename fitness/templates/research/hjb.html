@@ -1,0 +1,136 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Hamilton–Jacobi–Bellman Predictor</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/research.css' %}">
+
+</head>
+
+<body>
+
+<div class="research-container">
+
+    <!-- BACK BUTTON -->
+
+    <a href="{% url 'home' %}"
+       class="back-btn">
+
+        ← Back to Home
+
+    </a>
+
+    <!-- HERO IMAGE -->
+
+    <img src="{% static 'images/hjb.png' %}"
+         class="research-image">
+
+    <!-- CONTENT -->
+
+    <div class="research-content">
+
+        <h1>
+            Hamilton–Jacobi–Bellman Physiological Predictor
+        </h1>
+
+        <p>
+            Advanced physiological optimal-control system
+            using Hamilton–Jacobi–Bellman inspired dynamics
+            for adaptive recovery optimization,
+            cardiovascular stabilization,
+            and intelligent training regulation.
+        </p>
+
+        <h2>
+            Core Components
+        </h2>
+
+        <ul>
+
+            <li>
+                Hamilton–Jacobi–Bellman optimization
+            </li>
+
+            <li>
+                Adaptive physiological control
+            </li>
+
+            <li>
+                Dynamic recovery trajectory estimation
+            </li>
+
+            <li>
+                Cardiovascular risk minimization
+            </li>
+
+            <li>
+                Multi-day physiological simulation
+            </li>
+
+        </ul>
+
+        <h2>
+            Mathematical Foundation
+        </h2>
+
+        <p>
+            V(x) =
+            min_u
+            { instant_cost(x,u)
+            + γV(f(x,u)) }
+        </p>
+
+        <h2>
+            Applications
+        </h2>
+
+        <ul>
+
+            <li>
+                Adaptive training optimization
+            </li>
+
+            <li>
+                Recovery-state regulation
+            </li>
+
+            <li>
+                Cardiovascular safety estimation
+            </li>
+
+            <li>
+                Physiological fatigue control
+            </li>
+
+        </ul>
+
+        <h2>
+            System Architecture
+        </h2>
+
+        <p>
+            The HJB physiological module combines
+            optimal control theory,
+            physiological state estimation,
+            adaptive recovery planning,
+            and dynamic risk-aware optimization
+            into a continuous AI-driven
+            physiological control framework.
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

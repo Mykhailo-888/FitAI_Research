@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>About FitAI</title>
+
+    <style>
+
+        body{
+            margin:0;
+            padding:0;
+            background:#050816;
+            color:white;
+            font-family:Arial,sans-serif;
+        }
+
+        /* =========================================
+           BACK BUTTON
+        ========================================= */
+
+        .back-button{
+
+            position:fixed;
+
+            top:30px;
+            left:40px;
+
+            color:#5ab0ff;
+
+            text-decoration:none;
+
+            font-size:18px;
+
+            border:1px solid #5ab0ff;
+
+            padding:12px 20px;
+
+            border-radius:12px;
+
+            transition:0.3s;
+
+            z-index:9999;
+        }
+
+        .back-button:hover{
+
+            background:#5ab0ff;
+
+            color:black;
+        }
+
+        /* =========================================
+           MAIN CONTAINER
+        ========================================= */
+
+        .about-container{
+
+            width:90%;
+
+            max-width:1450px;
+
+            margin:auto;
+
+            padding-top:120px;
+
+            padding-bottom:100px;
+        }
+
+        h1{
+
+            font-size:72px;
+
+            color:#5ab0ff;
+
+            margin-bottom:35px;
+        }
+
+        .subtitle{
+
+            max-width:1200px;
+
+            font-size:24px;
+
+            line-height:1.9;
+
+            color:#d7e2ef;
+
+            margin-bottom:80px;
+        }
+
+        /* =========================================
+           CARDS
+        ========================================= */
+
+        .cards-grid{
+
+            display:grid;
+
+            grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+            gap:35px;
+
+            margin-bottom:80px;
+        }
+
+        .about-card{
+
+            background:rgba(255,255,255,0.05);
+
+            border:1px solid rgba(90,176,255,0.15);
+
+            border-radius:28px;
+
+            padding:35px;
+
+            backdrop-filter:blur(12px);
+
+            transition:0.3s;
+        }
+
+        .about-card:hover{
+
+            transform:translateY(-6px);
+
+            box-shadow:
+                0 0 35px rgba(90,176,255,0.2);
+        }
+
+        .card-title{
+
+            color:#5ab0ff;
+
+            font-size:34px;
+
+            margin-bottom:25px;
+
+            font-weight:bold;
+        }
+
+        .card-text{
+
+            color:#d7e2ef;
+
+            line-height:1.9;
+
+            font-size:18px;
+        }
+
+        /* =========================================
+           RESEARCH BLOCK
+        ========================================= */
+
+        .research-box{
+
+            background:rgba(255,255,255,0.04);
+
+            border:1px solid rgba(255,255,255,0.08);
+
+            border-radius:35px;
+
+            padding:50px;
+
+            margin-bottom:60px;
+        }
+
+        .research-title{
+
+            color:#5ab0ff;
+
+            font-size:42px;
+
+            margin-bottom:35px;
+        }
+
+        .research-text{
+
+            font-size:22px;
+
+            line-height:2;
+
+            color:#d7e2ef;
+
+            max-width:1250px;
+        }
+
+        /* =========================================
+           FUTURE BLOCK
+        ========================================= */
+
+        .future-grid{
+
+            display:grid;
+
+            grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+            gap:25px;
+
+            margin-top:45px;
+        }
+
+        .future-item{
+
+            background:rgba(90,176,255,0.05);
+
+            border:1px solid rgba(90,176,255,0.12);
+
+            border-radius:22px;
+
+            padding:28px;
+        }
+
+        .future-item h3{
+
+            color:#5ab0ff;
+
+            margin-bottom:18px;
+
+            font-size:28px;
+        }
+
+        .future-item p{
+
+            color:#d7e2ef;
+
+            line-height:1.8;
+
+            font-size:17px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- BACK BUTTON -->
+
+    <a href="/" class="back-button">
+
+        ← Back to Home
+
+    </a>
+
+    <!-- MAIN -->
+
+    <div class="about-container">
+
+        <h1>
+            About FitAI
+        </h1>
+
+        <p class="subtitle">
+
+            FitAI is an adaptive physiological AI research platform
+            integrating neural prediction systems,
+            latent-state physiological modeling,
+            stochastic recovery dynamics,
+            OpenCV body analysis,
+            and multidimensional physiological intelligence
+            into a unified research architecture.
+
+        </p>
+
+        <!-- CARDS -->
+
+        <div class="cards-grid">
+
+            <div class="about-card">
+
+                <div class="card-title">
+                    Physiological Intelligence
+                </div>
+
+                <div class="card-text">
+
+                    FitAI combines observable physiological signals,
+                    adaptive neural prediction systems,
+                    and latent-state modeling
+                    to simulate multidimensional physiological behavior.
+
+                </div>
+
+            </div>
+
+            <div class="about-card">
+
+                <div class="card-title">
+                    Adaptive Neural Systems
+                </div>
+
+                <div class="card-text">
+
+                    The platform uses custom neural architectures,
+                    nonlinear physiological analysis,
+                    recovery optimization,
+                    and explainable AI validation systems.
+
+                </div>
+
+            </div>
+
+            <div class="about-card">
+
+                <div class="card-title">
+                    Computer Vision Integration
+                </div>
+
+                <div class="card-text">
+
+                    OpenCV-based body proportion analysis
+                    enables physiological contour extraction,
+                    geometric body analysis,
+                    and adaptive physique estimation.
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RESEARCH -->
+
+        <div class="research-box">
+
+            <div class="research-title">
+
+                Research Architecture
+
+            </div>
+
+            <div class="research-text">
+
+                The FitAI ecosystem integrates stochastic physiological dynamics,
+                latent physiological state embeddings,
+                Hamilton–Jacobi-inspired adaptive optimization,
+                physiological signal analysis,
+                and adaptive recovery intelligence
+                into a unified physiological AI framework.
+
+                <br><br>
+
+                The system is designed to explore both observable
+                physiological measurements and hidden physiological states
+                through adaptive neural prediction,
+                multidimensional monitoring,
+                and nonlinear physiological modeling.
+
+            </div>
+
+        </div>
+
+        <!-- FUTURE DIRECTIONS -->
+
+        <div class="research-box">
+
+            <div class="research-title">
+
+                Future Directions
+
+            </div>
+
+            <div class="future-grid">
+
+                <div class="future-item">
+
+                    <h3>
+                        Latent States
+                    </h3>
+
+                    <p>
+
+                        Hidden physiological state embeddings
+                        for adaptive recovery and personalization.
+
+                    </p>
+
+                </div>
+
+                <div class="future-item">
+
+                    <h3>
+                        Hypercomplex AI
+                    </h3>
+
+                    <p>
+
+                        Quaternion and multidimensional
+                        physiological neural operators.
+
+                    </p>
+
+                </div>
+
+                <div class="future-item">
+
+                    <h3>
+                        Stochastic Modeling
+                    </h3>
+
+                    <p>
+
+                        Adaptive physiological uncertainty estimation
+                        and nonlinear recovery dynamics.
+
+                    </p>
+
+                </div>
+
+                <div class="future-item">
+
+                    <h3>
+                        Physiological Vision
+                    </h3>
+
+                    <p>
+
+                        Advanced OpenCV body analysis
+                        and adaptive contour intelligence.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

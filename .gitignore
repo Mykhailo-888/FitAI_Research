@@ -4,6 +4,7 @@ docker-compose.yml
 __pycache__/
 *.pyc
 .venv/
+.venv_research/
 .idea/
 media/
 staticfiles/

@@ -2,7 +2,7 @@ import pickle
 from pathlib import Path
 
 # Correct path - model is located in ml/models/
-model_path = Path(r"C:\FitAI_django\ml\models\trained_fitness_model_simple.pkl")
+model_path = Path(r"C:\FitAI\ml\models\trained_fitness_model_simple.pkl")
 
 print(f"Checking file: {model_path}")
 print(f"File exists: {model_path.exists()}\n")
