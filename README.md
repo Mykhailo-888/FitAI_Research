@@ -24,7 +24,7 @@ Unlike traditional static fitness calculators, FitAI is designed as a physiologi
 
 ## Physiologically Reactive Neural System
 > The monitoring system tracks longitudinal neural predictions, physiological stability, and adaptive output dynamics over time.
-<img width="1536" height="1024" alt="Physiological Monitoring Dashboad" src="https://github.com/user-attachments/assets/fb148194-6a0b-4b71-ae8c-32291c25779a" />
+<img width="1536" height="1024" alt="Physiological Responce Analysis" src="https://github.com/user-attachments/assets/c8813a25-260a-40d2-9bd8-a122beede09b" />
 
 The system dynamically adapts predictions based on:
 * HRV
@@ -54,6 +54,7 @@ FitAI predicts 8 physiological and fitness-related outputs:
 * Testosterone Projection
 
 The prediction engine uses:
+<img width="1536" height="1024" alt="Custom NumPy Neural Network" src="https://github.com/user-attachments/assets/33ce6fc1-5769-47b9-9df4-82c981cb0dc3" />
 
 * custom NumPy neural networks
 * hyperbolic tangent activations (`tanh`)
@@ -73,7 +74,8 @@ The neural network is implemented entirely without high-level deep learning fram
 The system combines:
 
 * 23 physiological parameters
-* <img width="1536" height="1024" alt="parameters" src="https://github.com/user-attachments/assets/46b8116d-f8ec-4125-87e6-601a3e6a16a9" />
+<img width="1536" height="1024" alt="Physiological Signal Flow" src="https://github.com/user-attachments/assets/e75d51c8-107c-46ff-a398-33da00805a1b" />
+
 
 * OpenCV body proportion analysis from uploaded user photos
 
@@ -131,8 +133,6 @@ This means the model does not simply output arbitrary values.
 ## The network dynamically and consistently reacts to physiological changes.
 
 Predictions structurally respond to:
-<img width="1536" height="1024" alt="Physiological Responce Analysis" src="https://github.com/user-attachments/assets/bb133763-8101-4faa-8b40-14eb7a872413" />
-
 * HRV
 * sleep quality
 * emotional stress
@@ -225,6 +225,7 @@ Stability metrics are calculated directly from historical prediction records gen
 ---
 
 ## Synthetic Metrics
+<img width="985" height="749" alt="s2" src="https://github.com/user-attachments/assets/9af2cdde-a38c-44c6-855b-9a7a45070e65" />
 
 The Synthetic system is a separate rule-based physiological simulation layer.
 
@@ -313,6 +314,8 @@ The visualization layer provides:
 * explainability displays
 * monitoring dashboards
 * temporal drift visualization
+* <img width="1579" height="843" alt="s1" src="https://github.com/user-attachments/assets/364c761e-a30a-4909-90d0-bca549bc76ce" />
+
 ---
 # Emotional Drift Modeling
 <img width="1486" height="962" alt="stochastic" src="https://github.com/user-attachments/assets/557a7741-bbbb-40b1-98fe-7baffd309849" />
