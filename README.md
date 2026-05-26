@@ -1,6 +1,12 @@
 # FitAI — Physiologically Reactive AI Fitness System
+## Live Demo
+https://fitai-research.onrender.com/
 
+>Press "Get Started" to explore the onboarding flow and interactive physiological AI dashboard.
 FitAI is an experimental AI-driven physiological fitness platform built with Django, NumPy, OpenCV, and custom mathematical modeling.
+<img width="1585" height="841" alt="image" src="https://github.com/user-attachments/assets/6f620f68-e6e5-4f84-bdd8-340d2900ce47" />
+
+
 
 The project combines:
 
@@ -14,12 +20,13 @@ The project combines:
 * longitudinal monitoring systems
 * temporal prediction tracking
 
-Unlike traditional static fitness calculators, FitAI is designed as a:
+Unlike traditional static fitness calculators, FitAI is designed as a physiologically reactive neural system rather than a fixed rule-based predictor.
 
 ## Physiologically Reactive Neural System
+> The monitoring system tracks longitudinal neural predictions, physiological stability, and adaptive output dynamics over time.
+<img width="1536" height="1024" alt="Physiological Monitoring Dashboad" src="https://github.com/user-attachments/assets/fb148194-6a0b-4b71-ae8c-32291c25779a" />
 
-that dynamically adapts predictions based on:
-
+The system dynamically adapts predictions based on:
 * HRV
 * sleep quality
 * emotional stress
@@ -66,6 +73,8 @@ The neural network is implemented entirely without high-level deep learning fram
 The system combines:
 
 * 23 physiological parameters
+* <img width="1536" height="1024" alt="parameters" src="https://github.com/user-attachments/assets/46b8116d-f8ec-4125-87e6-601a3e6a16a9" />
+
 * OpenCV body proportion analysis from uploaded user photos
 
 Physiological inputs include:
@@ -84,6 +93,7 @@ Physiological inputs include:
 * Performance Metrics
 
 The OpenCV analysis module extracts:
+<img width="1536" height="1024" alt="OpenCV Body Analysis" src="https://github.com/user-attachments/assets/189e3310-8ca8-43a5-b7cb-1bc948184250" />
 
 * shoulder width
 * waist width
@@ -112,6 +122,7 @@ The model behavior is validated through:
 Each physiological feature is independently perturbed by +30% to measure how predictions react.
 
 ## Gradient-Based Sensitivity Analysis (∂y/∂x)
+<img width="685" height="572" alt="image" src="https://github.com/user-attachments/assets/07dbb93e-560a-483e-b0d6-845e5dc8dcb1" />
 
 Local physiological sensitivity is estimated numerically through gradient-based feature analysis.
 
@@ -120,6 +131,7 @@ This means the model does not simply output arbitrary values.
 ## The network dynamically and consistently reacts to physiological changes.
 
 Predictions structurally respond to:
+<img width="1536" height="1024" alt="Physiological Responce Analysis" src="https://github.com/user-attachments/assets/bb133763-8101-4faa-8b40-14eb7a872413" />
 
 * HRV
 * sleep quality
@@ -242,6 +254,7 @@ The synthetic layer is implemented independently from the neural network through
 ---
 
 ## Dual-Layer Evaluation Architecture
+<img width="1536" height="1024" alt="Dual-Layer Evaluation Architecture" src="https://github.com/user-attachments/assets/8e289796-b908-4999-a9d1-f0d1d60526c5" />
 
 FitAI therefore implements a:
 
@@ -302,6 +315,7 @@ The visualization layer provides:
 * temporal drift visualization
 ---
 # Emotional Drift Modeling
+<img width="1486" height="962" alt="stochastic" src="https://github.com/user-attachments/assets/557a7741-bbbb-40b1-98fe-7baffd309849" />
 
 FitAI contains a stochastic emotional forecasting system inspired by Itô stochastic differential equations.
 
@@ -330,6 +344,7 @@ This module introduces stochastic physiological modeling into the platform.
 ---
 
 # Training Optimization System
+<img width="1536" height="1024" alt="Physiological Signal Flow" src="https://github.com/user-attachments/assets/b7210051-d12e-4913-8a73-aea2fd4a2a04" />
 
 FitAI includes a physiological weekly training optimizer.
 
@@ -355,7 +370,10 @@ The system automatically reduces training intensity when recovery risk becomes e
 ---
 # Hamilton–Jacobi–Bellman Inspired Risk Modeling
 
-FitAI includes a simplified physiological control model inspired by Hamilton–Jacobi–Bellman optimization ideas.
+>FitAI includes a simplified physiological control model inspired by Hamilton–Jacobi–Bellman optimization ideas.
+<img width="1536" height="1024" alt="hjb" src="https://github.com/user-attachments/assets/8e2b4d91-88ca-401a-bce8-a829d9c18b4c" />
+
+
 
 The system estimates:
 
@@ -406,6 +424,7 @@ Generated using:
 * physiological feature engineering
 ---
 ## Latent Physiological Dataset
+<img width="1536" height="1024" alt="Latent Physiological States" src="https://github.com/user-attachments/assets/1a0af026-8a26-4672-b990-cf20f3c1f260" />
 
 `edited_23_params_realistic_latent.csv`
 
@@ -499,6 +518,7 @@ Implemented using:
 * SQLite
 
 ## Machine Learning
+<img width="1536" height="1024" alt="Custom NumPy Neural Network" src="https://github.com/user-attachments/assets/2d249e0e-835f-4edb-a1fc-62312fbbf0bc" />
 
 * custom NumPy neural networks
 * explainability analysis
