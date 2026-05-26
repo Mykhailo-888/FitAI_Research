@@ -521,7 +521,6 @@ Implemented using:
 * SQLite
 
 ## Machine Learning
-<img width="1536" height="1024" alt="Custom NumPy Neural Network" src="https://github.com/user-attachments/assets/2d249e0e-835f-4edb-a1fc-62312fbbf0bc" />
 
 * custom NumPy neural networks
 * explainability analysis
@@ -656,6 +655,25 @@ FitAI/
 └── requirements.txt
 ```
 ---
+---
+
+# Mitochondrial Energy Dynamics
+
+> Experimental visualization of mitochondrial energy behavior, ATP efficiency, recovery energetics, and physiological adaptation mechanisms.
+
+<img width="1536" height="1024" alt="parameters" src="https://github.com/user-attachments/assets/c6787761-f131-421a-a302-ae901bbda902" />
+
+
+FitAI explores future physiological modeling concepts involving:
+
+* ATP production efficiency
+* recovery energetics
+* mitochondrial adaptation
+* oxygen utilization
+* latent energy dynamics
+* physiological resilience modeling
+
+This direction is part of the platform’s long-term research architecture focused on hidden physiological state modeling and adaptive biological intelligence systems.
 # Research Direction
 
 Future directions include:
