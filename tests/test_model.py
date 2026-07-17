@@ -1,4 +1,4 @@
-# tests/test_model.py
+# tests/run_model.py
 import pytest
 import numpy as np
 from ml.fit_model_core import FitnessNeuralNet
