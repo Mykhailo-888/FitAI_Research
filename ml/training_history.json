@@ -6,7 +6,7 @@
     "lr": 0.0005,
     "embedding_size": 48,
     "hidden_size": 32,
-    "best_val_loss": 0.460229207418618,
-    "timestamp": "2026-05-02 06:55:51",
+    "best_val_loss": 0.4901640012253009,
+    "timestamp": "2026-07-12 03:48:14",
     "notes": "physics-based targets with improved waist logic (more negative waist)"
 }
