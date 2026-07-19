@@ -26,16 +26,22 @@ DATASETS = {
     },
     "gym_members_exercise_tracking": {
         "path": ROOT / "data" / "gym_members_exercise_tracking.csv",
-        "source": "Kaggle dataset; repository README does not preserve an exact URL/author",
-        "source_url": None,
-        "license": "Unknown in repository",
+        "source": "Gym Members Exercise Dataset by Vala Khorasani (Kaggle, 2024)",
+        "source_url": "https://www.kaggle.com/datasets/valakhorasani/gym-members-exercise-dataset",
+        "license": "Apache License 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0",
+        "citation": "Khorasani, V. (2024). Gym Members Exercise Dataset. Kaggle.",
         "population": "Gym members (973 local rows)",
         "kind": "externally_sourced_unverified_license",
         "feature_mappings": {
             "Age": "Age", "Weight_kg": "Weight (kg)", "Height_cm": "Height (m)",
             "Resting_heart_rate_bpm": "Resting_BPM",
         },
-        "limitations": ["Exact provenance and license are not recorded", "Only mapped fields may be compared"],
+        "limitations": [
+            "Rows have no participant identifier, so 973 records cannot be asserted to be 973 unique participants",
+            "The source describes gym members, not professional athletes",
+            "Only age, height, weight and resting heart rate map directly to FitAI",
+        ],
     },
 }
 

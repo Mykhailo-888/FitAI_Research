@@ -1,229 +1,54 @@
 {% extends 'base.html' %}
-
-{% block title %}Your Results - FitAI{% endblock %}
-
+{% block title %}Bioenergetic Assessment · FitAI{% endblock %}
 {% block content %}
-
 <style>
-.results-container {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px;
-}
-.impact-title {
-    font-size: 26px;
-    font-weight: 800;
-    text-align: center;
-    margin: 40px 0 15px 0;
-    color: #1e40af;
-}
-
-.impact-output {
-    font-size: 22px;
-    font-weight: 700;
-    color: #1e40af;
-    text-align: center;
-    margin: 35px 0 20px 0;
-}
-
-.impact-row {
-    display: flex;
-    gap: 30px;
-    flex-wrap: nowrap;
-}
-
-.impact-col {
-    width: 50%;
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 12px;
-}
-
-.bar {
-    margin-bottom: 20px;
-}
-
-.bar-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 15px;
-    margin-bottom: 6px;
-}
-
-.bar-name {
-    white-space: nowrap;
-}
-
-.bar-percent {
-    font-weight: bold;
-}
-
-.bar-fill {
-    height: 10px;
-    background: #e5e7eb;
-    border-radius: 6px;
-    overflow: hidden;
-}
-
-.bar-fill-inner {
-    height: 100%;
-    border-radius: 6px;
-    transition: width 0.5s ease;
-}
-
-.forecast-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 16px 20px;
-    background: white;
-    border-radius: 12px;
-    font-size: 18px;
-    margin-bottom: 12px;
-}
-
-.forecast-item span:last-child {
-    white-space: nowrap;
-}
-
-.recommendations {
-    font-size: 17px;
-    line-height: 1.7;
-    background: #f8fafc;
-    padding: 32px;
-    border-radius: 16px;
-}
-
-/* 🔥 MOBILE */
-@media (max-width: 768px) {
-    .impact-row {
-        flex-direction: column;
-    }
-    .impact-col {
-        width: 100%;
-    }
-}
+.research-shell{max-width:1240px;margin:auto;padding:24px;color:#172554}.hero-grid,.two-col,.state-grid{display:grid;gap:18px}.hero-grid{grid-template-columns:1.2fr 1fr}.two-col{grid-template-columns:1fr 1fr}.state-grid{grid-template-columns:repeat(3,1fr)}.card{background:#fff;border:1px solid #dbeafe;border-radius:18px;padding:22px;box-shadow:0 12px 35px #1e3a8a12}.blue{background:linear-gradient(135deg,#1d4ed8,#2563eb);color:white}.score{font-size:4rem;font-weight:800;line-height:1}.pill{display:inline-block;padding:7px 12px;border-radius:999px;background:#dbeafe;color:#1e40af;font-weight:700}.meter{height:9px;background:#e2e8f0;border-radius:9px;overflow:hidden;margin-top:8px}.meter span{display:block;height:100%;background:#2563eb}.metric{margin:14px 0}.warning{border-left:4px solid #f59e0b;padding:10px;background:#fffbeb}.muted{color:#64748b}.pred{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #e2e8f0}h1,h2,h3{color:#1e3a8a}.blue h1,.blue h2,.blue h3{color:#fff}@media(max-width:800px){.hero-grid,.two-col,.state-grid{grid-template-columns:1fr}.research-shell{padding:12px}}
 </style>
+<div class="research-shell">
+  <div class="hero-grid">
+    <section class="card blue">
+      <p>Bioenergetic Adaptation Index · research proxy</p>
+      <div class="score">{{ advanced.bioenergetic_state.bai_normalized|floatformat:1 }}<small>/100</small></div>
+      <h2>{{ advanced.recommendation.label }}</h2>
+      <p>{{ advanced.recommendation.reason }}</p>
+      <span class="pill">{{ advanced.recommendation.code }}</span>
+    </section>
+    <section class="card">
+      <h2>Decision confidence</h2>
+      <p><strong>{{ advanced.bioenergetic_state.confidence|floatformat:2 }}</strong> confidence · {{ advanced.bioenergetic_state.uncertainty|floatformat:2 }} uncertainty</p>
+      <p>Intensity {{ advanced.recommendation.intensity_range }} · Volume {{ advanced.recommendation.volume_range }}</p>
+      <p>{{ advanced.recommendation.session_type }}</p>
+      <p class="muted">{{ advanced.recommendation.disclaimer }}</p>
+    </section>
+  </div>
 
-<div class="results-container">
+  <h2>Latent bioenergetic states</h2>
+  <div class="state-grid">{% for name,value in advanced.latent_states.items %}<div class="card"><strong>{{ name|title }}</strong><p>{{ value|floatformat:3 }}</p></div>{% endfor %}</div>
+  <h2>Physiological states</h2>
+  <div class="state-grid">{% for name,value in advanced.physiological_states.items %}<div class="card metric"><strong>{{ name|title }}</strong><span style="float:right">{{ value|floatformat:1 }}</span><div class="meter"><span style="width:{{ value }}%"></span></div></div>{% endfor %}</div>
 
-<h1 style="color: #1e40af; text-align: center; margin-bottom: 40px; font-size: 36px;">
-    Your Results
-</h1>
+  <h2>Training decision and HJB control</h2>
+  <div class="two-col">
+    <section class="card"><h3>{{ advanced.recommendation.label }}</h3><p>{{ advanced.recommendation.session_type }}</p><p>Reassess: {{ advanced.recommendation.next_reassessment }}</p>{% for action in advanced.recommendation.recovery_actions %}<p>• {{ action }}</p>{% endfor %}</section>
+    <section class="card"><h3>Seven-day control plan</h3><p>Optimal intensity: {{ advanced.hjb_control.optimal_intensity|floatformat:2 }}</p><p>Risk: {{ advanced.hjb_control.risk }}</p>{% for warning in advanced.risks %}<p class="warning">{{ warning }}</p>{% empty %}<p>No critical gate active.</p>{% endfor %}</section>
+  </div>
 
-{% if model_error %}
-<div style="margin-bottom: 40px; padding: 20px; border-radius: 12px; background:#fef3c7; color:#92400e;">
-    <strong>Попередження:</strong> {{ model_error }}
+  <h2>Old vs new architecture</h2>
+  <div class="two-col">
+    <section class="card"><h3>Legacy FitAI Analysis</h3>{% for item in legacy.predictions %}<div class="pred"><span>{{ item.name }}</span><strong>{{ item.value }} {{ item.unit }}</strong></div>{% endfor %}<p>{{ legacy.recommendation }}</p><p class="muted">{{ legacy.risk.label }}</p></section>
+    <section class="card"><h3>Advanced Latent Bioenergetic Assessment</h3>{% for item in legacy.predictions %}<div class="pred"><span>{{ item.name }}</span><strong>{{ item.value }} {{ item.unit }}</strong></div>{% endfor %}<p>BAI, uncertainty, six latent states, seven physiological states, risk gates, personal baseline and HJB control are added.</p></section>
+  </div>
+  <section class="card"><h2>What the new architecture adds</h2><p>{{ comparison.summary }}</p>{% for item in comparison.added_capabilities %}<span class="pill">{{ item }}</span> {% endfor %}</section>
+
+  <h2>Personal history</h2><section class="card"><canvas id="historyChart" height="100"></canvas></section>
+  <div class="two-col">
+    <section class="card"><h2>Data quality</h2><p>Score: {{ advanced.input_quality.score }}/100</p><p>Measured: {{ advanced.input_quality.measured_features|join:", "|default:"None" }}</p><p>Reported: {{ advanced.input_quality.reported_features|join:", " }}</p><p>Imputed: {{ advanced.input_quality.missing_features|join:", "|default:"None" }}</p></section>
+    <section class="card"><h2>Explainability & limitations</h2><p>Positive: {{ advanced.explanation.positive_factors|join:", "|default:"None identified" }}</p><p>Negative: {{ advanced.explanation.negative_factors|join:", "|default:"None identified" }}</p>{% for item in advanced.explanation.limitations %}<p class="warning">{{ item }}</p>{% endfor %}</section>
+  </div>
 </div>
-{% endif %}
-
-<!-- Forecast -->
-<div style="margin-bottom: 50px;">
-    <h2 style="color: #1e40af; text-align: center; margin-bottom: 24px; font-size: 28px;">
-        Forecast for the Next Week
-    </h2>
-
-    <div style="background: #f0f9ff; padding: 32px; border-radius: 16px;">
-        {% for label, unit, value in prediction_with_labels %}
-        <div class="forecast-item">
-            <span style="font-weight:600; color:#1e40af;">{{ label }}</span>
-            <span style="font-weight:bold; color:#2563eb; font-size:20px;">
-                {{ value }} {{ unit }}
-            </span>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-
-<!-- Weekly Plan -->
-<div style="margin-bottom: 50px;">
-    <h2 style="color: #1e40af; text-align: center; margin-bottom: 24px; font-size: 28px;">
-        Your Weekly Training Plan
-    </h2>
-
-    <div style="background: #f0f9ff; padding: 32px; border-radius: 16px; text-align: center;">
-        {% for key, value in weekly_plan.items %}
-        <div style="margin: 12px 0; font-size: 18px;">
-            <strong style="color: #1e40af;">{{ key|title }}</strong>:
-            <span style="font-weight:bold;">{{ value }}</span>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-
-<!-- Recommendations -->
-<div style="margin-bottom: 50px;">
-    <h2 style="color: #1e40af; text-align: center; margin-bottom: 24px; font-size: 28px;">
-        Personalized Recommendations & Insights
-    </h2>
-
-    <div class="recommendations" style="text-align: center; white-space: pre-line;">
-        {{ recommendations|safe }}
-    </div>
-</div>
-
-<!-- FEATURE IMPACT -->
-<div style="margin-top: 60px;">
-    <h2 class="impact-title">Calculating Feature Impact (PER OUTPUT)</h2>
-
-    {% for item in feature_impact %}
-    <div style="margin-bottom: 60px;">
-        <h3 class="impact-output">{{ item.output }}</h3>
-
-        <div class="impact-row">
-
-            <!-- LEFT -->
-            <div class="impact-col">
-                <p style="font-weight:700; margin-bottom:15px;">Relative (+30%)</p>
-
-                {% for bar in item.relative %}
-                <div class="bar">
-                    <div class="bar-header">
-                        <span class="bar-name">{{ bar.name }}</span>
-                        <span class="bar-percent">{{ bar.value }}%</span>
-                    </div>
-                    <div class="bar-fill">
-                        <div class="bar-fill-inner" style="width:{{ bar.value }}%; background:#22c55e;"></div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-
-            <!-- RIGHT -->
-            <div class="impact-col">
-                <p style="font-weight:700; margin-bottom:15px;">Gradient-based</p>
-
-                {% for bar in item.gradient %}
-                <div class="bar">
-                    <div class="bar-header">
-                        <span class="bar-name">{{ bar.name }}</span>
-                        <span class="bar-percent">{{ bar.value }}%</span>
-                    </div>
-                    <div class="bar-fill">
-                        <div class="bar-fill-inner" style="width:{{ bar.value }}%; background:#f59e0b;"></div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-
-        </div>
-    </div>
-    {% endfor %}
-</div>
-
-<!-- Buttons -->
-<div style="text-align: center; margin-top: 40px;">
-    <a href="{% url 'onboarding' %}"
-       style="background: #3b82f6; color: white; padding: 16px 48px; border-radius: 12px; text-decoration: none; font-weight: 600; margin-right: 16px;">
-        Update Data
-    </a>
-
-    <a href="{% url 'history' %}"
-       style="background: #10b981; color: white; padding: 16px 48px; border-radius: 12px; text-decoration: none; font-weight: 600;">
-        View History
-    </a>
-</div>
-
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script>
+const h={{ history_json|safe }}; const ctx=document.getElementById('historyChart');
+new Chart(ctx,{type:'line',data:{labels:h.labels,datasets:['bai','energy','recovery','stress','adaptation','fatigue','readiness','confidence'].map((k,i)=>({label:k,data:h[k],borderColor:`hsl(${i*42},70%,45%)`,tension:.25}))},options:{responsive:true,interaction:{mode:'index',intersect:false}}});
+</script>
 {% endblock %}

@@ -14,3 +14,4 @@ staticfiles/
 
 *.pkl
 !ml/models/trained_fitness_model_simple.pkl
+assessment_output.json

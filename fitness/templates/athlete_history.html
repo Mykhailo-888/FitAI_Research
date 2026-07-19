@@ -1,0 +1,3 @@
+{% extends 'base.html' %}{% block title %}Athlete History · FitAI{% endblock %}{% block content %}
+<main style="max-width:1000px;margin:auto;padding:30px"><h1>{{ athlete.public_id }} history</h1>
+{% for item in comparisons %}<article style="padding:20px;margin:14px 0;border:1px solid #dbeafe;border-radius:14px"><strong>{{ item.measurement.measured_at }}</strong> · quality {{ item.measurement.input_quality }}/100 <a href="{% url 'assessment_results' item.pk %}">Open assessment</a></article>{% empty %}<p>No assessments.</p>{% endfor %}</main>{% endblock %}

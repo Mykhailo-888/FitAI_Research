@@ -8,7 +8,8 @@ from django.urls import reverse
 from django.core.files.storage import default_storage
 from django.conf import settings
 
-from .models import UserData
+from .models import Athlete, DatasetRegistry, ModelComparison, UserData
+from .services import assess_and_compare
 from ml.fit_model_core import get_fitness_model
 from ml.training_optimizer import weekly_training_plan_optimizer
 from ml.emotional_drift import analyze_emotional_drift
@@ -228,6 +229,41 @@ def process_onboarding_results(request):
         for key, val in defaults.items():
             if key not in data or data.get(key) in (None, '', 'None', None):
                 data[key] = val
+
+        canonical_payload = {
+            "athlete_id": request.session.get("athlete_id", "onboarding-athlete"),
+            "age": data["Age"], "height_cm": data["Height"], "weight_kg": data["Weight"],
+            "waist_circumference_cm": data["Waist circumference"],
+            "emotional_stress": data["Emotional stress"],
+            "alcohol_units_per_week": data["Alcohol (units/week)"],
+            "daily_calories_kcal": data["Daily calories (kcal/day)"],
+            "max_push_ups": data["Max push-ups"], "max_pull_ups": data["Max pull-ups"],
+            "run_1km_min": data["1 km run"], "run_100m_sec": data["100 m run"],
+            "cooper_test_km": data["Cooper test"], "burpees_3min": data["Burpees in 3 min"],
+            "push_ups_1min": data["Push-ups in 1 min"], "sleep_hours": data["Sleep"],
+            "resting_heart_rate_bpm": data["Resting heart rate"],
+            "hrv": data["HRV"],
+            "systolic_blood_pressure_mmhg": data["Systolic blood pressure"],
+            "mitochondria_placeholder": data["Mitochondria (placeholder)"],
+            "testosterone_ng_dl": data["Testosterone"], "cortisol_ug_dl": data["Cortisol"],
+            "hemoglobin_g_dl": data["Hemoglobin"], "crp_mg_l": data["CRP"],
+            "sources": {
+                key: ("athlete-reported" if key != "Mitochondria_placeholder" else "dataset-imputed")
+                for key in (
+                    "Age", "Height_cm", "Weight_kg", "Waist_circumference_cm",
+                    "Emotional_stress", "Alcohol_units_per_week", "Daily_calories_kcal",
+                    "Max_push_ups", "Max_pull_ups", "Run_1km_min", "Run_100m_sec",
+                    "Cooper_test_km", "Burpees_3min", "Push_ups_1min", "Sleep_hours",
+                    "Resting_heart_rate_bpm", "HRV", "Systolic_blood_pressure_mmhg",
+                    "Mitochondria_placeholder", "Testosterone_ng_dl", "Cortisol_ug_dl",
+                    "Hemoglobin_g_dl", "CRP_mg_l",
+                )
+            },
+        }
+        comparison = assess_and_compare(canonical_payload)
+        request.session.pop("onboarding_data", None)
+        request.session.modified = True
+        return redirect("assessment_results", comparison_id=comparison.pk)
 
         crp = float(data.get("CRP", 1.5))
         initial_stress = float(data.get("Emotional stress", 5.0))
@@ -516,6 +552,58 @@ def history(request):
         'photo_recommendation': "No photo analysis available",
     }
     return render(request, 'history.html', context)
+
+
+def assessment_results(request, comparison_id):
+    comparison = ModelComparison.objects.select_related(
+        "measurement__athlete", "legacy_model_run", "new_architecture_model_run",
+        "measurement__advanced_result",
+    ).get(pk=comparison_id)
+    advanced = comparison.new_architecture_model_run.output_snapshot
+    legacy = comparison.legacy_model_run.output_snapshot
+    history_rows = list(
+        comparison.measurement.athlete.measurements.filter(
+            advanced_result__isnull=False
+        ).select_related("advanced_result").order_by("measured_at")
+    )
+    history_data = {
+        "labels": [row.measured_at.isoformat() for row in history_rows],
+        "bai": [row.advanced_result.bai for row in history_rows],
+        "confidence": [row.advanced_result.confidence * 100 for row in history_rows],
+        **{
+            key: [row.advanced_result.physiological_states.get(key) for row in history_rows]
+            for key in ("energy", "recovery", "stress", "adaptation", "fatigue", "readiness")
+        },
+    }
+    # Energy is a latent value, not a physiological-state field.
+    history_data["energy"] = [
+        row.advanced_result.latent_states.get("energy") for row in history_rows
+    ]
+    return render(request, "results.html", {
+        "comparison": comparison, "measurement": comparison.measurement,
+        "advanced": advanced, "legacy": legacy,
+        "history_json": json.dumps(history_data),
+    })
+
+
+def athlete_history(request, athlete_id):
+    athlete = Athlete.objects.get(public_id=athlete_id)
+    comparisons = ModelComparison.objects.filter(
+        measurement__athlete=athlete
+    ).select_related("measurement").order_by("-measurement__measured_at")
+    return render(request, "athlete_history.html", {
+        "athlete": athlete, "comparisons": comparisons,
+    })
+
+
+def architecture_comparison(request, comparison_id):
+    return assessment_results(request, comparison_id)
+
+
+def dataset_registry(request):
+    return render(request, "dataset_registry.html", {
+        "datasets": DatasetRegistry.objects.order_by("name")
+    })
 
 def training_log_view(request):
     feature_file = Path(r"C:/FitAI_Research/ml/feature_importance.json")

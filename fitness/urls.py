@@ -29,6 +29,10 @@ urlpatterns = [
 
     # EXISTING PAGES
     path('onboarding/', views.onboarding, name='onboarding'),
+    path('results/<int:comparison_id>/', views.assessment_results, name='assessment_results'),
+    path('athletes/<str:athlete_id>/history/', views.athlete_history, name='athlete_history'),
+    path('comparisons/<int:comparison_id>/', views.architecture_comparison, name='architecture_comparison'),
+    path('datasets/', views.dataset_registry, name='dataset_registry'),
 
     path('history/', views.history, name='history'),
 
