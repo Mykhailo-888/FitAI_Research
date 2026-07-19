@@ -264,7 +264,7 @@ class FitnessNeuralNet:
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, "wb") as f:
             pickle.dump(state, f)
-        print(f"✅ Model saved to {filename}")
+        print(f"Model saved to {filename}")
 
     def load_model(self, filename):
         with open(filename, "rb") as f:
@@ -278,7 +278,7 @@ class FitnessNeuralNet:
         self.std_X = state["std_X"]
         self.scalers_y = state["scalers_y"]
         self.best_val_loss = state.get("best_val_loss", float('inf'))
-        print(f"✅ Model loaded from {filename}")
+        print(f"Model loaded from {filename}")
 
 
 # ================= HELPER FOR DJANGO =================

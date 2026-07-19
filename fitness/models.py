@@ -1,6 +1,82 @@
 from django.db import models
 from django.utils import timezone
 
+
+class Athlete(models.Model):
+    public_id = models.CharField(max_length=100, unique=True, db_index=True)
+    sex = models.CharField(max_length=20, blank=True)
+    sport_type = models.CharField(max_length=100, blank=True)
+    training_level = models.CharField(max_length=50, blank=True)
+    training_years = models.FloatField(null=True, blank=True)
+    profile_data = models.JSONField(default=dict, blank=True)
+    is_demonstration = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.public_id
+
+
+class AthleteMeasurement(models.Model):
+    athlete = models.ForeignKey(
+        Athlete, on_delete=models.CASCADE, related_name="measurements"
+    )
+    measured_at = models.DateTimeField(default=timezone.now, db_index=True)
+    raw_inputs = models.JSONField(default=dict)
+    units = models.JSONField(default=dict)
+    sources = models.JSONField(default=dict)
+    input_quality = models.FloatField(default=0)
+    missing_features = models.JSONField(default=list)
+    imputed_features = models.JSONField(default=dict)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-measured_at"]
+
+
+class BioenergeticAssessment(models.Model):
+    athlete = models.ForeignKey(
+        Athlete, on_delete=models.CASCADE, related_name="assessments"
+    )
+    measurement = models.ForeignKey(
+        AthleteMeasurement, on_delete=models.PROTECT, related_name="assessments"
+    )
+    model_version = models.CharField(max_length=200)
+    bai = models.FloatField()
+    bai_normalized = models.FloatField()
+    confidence = models.FloatField()
+    uncertainty = models.FloatField()
+    reconstruction_error = models.FloatField()
+    latent_states = models.JSONField(default=dict)
+    fatigue = models.FloatField()
+    recovery = models.FloatField()
+    stress = models.FloatField()
+    inflammation = models.FloatField()
+    performance = models.FloatField()
+    readiness = models.FloatField()
+    adaptation = models.FloatField()
+    risk_flags = models.JSONField(default=list)
+    explanation = models.JSONField(default=dict)
+    result = models.JSONField(default=dict)
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+
+class Recommendation(models.Model):
+    assessment = models.OneToOneField(
+        BioenergeticAssessment,
+        on_delete=models.CASCADE,
+        related_name="recommendation_record",
+    )
+    training_intensity = models.FloatField()
+    recovery_recommendation = models.TextField()
+    hjb_action = models.JSONField(default=dict)
+    safety_restrictions = models.JSONField(default=list)
+    explanation = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
 class UserData(models.Model):
     timestamp = models.DateTimeField(default=timezone.now)
 

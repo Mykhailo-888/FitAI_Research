@@ -1,13 +1,16 @@
 ﻿db.sqlite3
-docker-compose.yml
 
 __pycache__/
 *.pyc
 .venv/
 .venv_research/
 .idea/
+.env
+.env.*
+!.env.example
 media/
 staticfiles/
+.reference_fitai_v2/
 
 *.pkl
 !ml/models/trained_fitness_model_simple.pkl

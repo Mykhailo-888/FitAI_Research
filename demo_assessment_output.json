@@ -1,0 +1,282 @@
+{
+  "athlete_id": "demo-athlete-001",
+  "assessment_time": "2026-07-19T13:41:31.000711+00:00",
+  "model_version": "trained-fitness-simple+poc-hierarchical-vae-untrained",
+  "input_quality": {
+    "score": 79.3,
+    "measured_features": [
+      "Resting_heart_rate_bpm",
+      "Systolic_blood_pressure_mmhg",
+      "Testosterone_ng_dl",
+      "Cortisol_ug_dl",
+      "Hemoglobin_g_dl",
+      "CRP_mg_l",
+      "HRV"
+    ],
+    "reported_features": [
+      "Age",
+      "Height_cm",
+      "Weight_kg",
+      "Waist_circumference_cm",
+      "Emotional_stress",
+      "Alcohol_units_per_week",
+      "Daily_calories_kcal",
+      "Max_push_ups",
+      "Max_pull_ups",
+      "Run_1km_min",
+      "Run_100m_sec",
+      "Cooper_test_km",
+      "Burpees_3min",
+      "Push_ups_1min",
+      "Sleep_hours"
+    ],
+    "imputed_features": {
+      "Mitochondria_placeholder": {
+        "value": 204.0,
+        "source": "dataset-imputed"
+      }
+    },
+    "missing_features": [
+      "Mitochondria_placeholder"
+    ],
+    "warnings": [
+      "Legacy mitochondria placeholder was imputed; it is not a measurement.",
+      "Hierarchical VAE weights are not present; latent states are proof-of-concept only."
+    ],
+    "sources": {
+      "Age": "athlete-reported",
+      "Height_cm": "athlete-reported",
+      "Weight_kg": "athlete-reported",
+      "Waist_circumference_cm": "athlete-reported",
+      "Emotional_stress": "athlete-reported",
+      "Alcohol_units_per_week": "athlete-reported",
+      "Daily_calories_kcal": "athlete-reported",
+      "Max_push_ups": "athlete-reported",
+      "Max_pull_ups": "athlete-reported",
+      "Run_1km_min": "athlete-reported",
+      "Run_100m_sec": "athlete-reported",
+      "Cooper_test_km": "athlete-reported",
+      "Burpees_3min": "athlete-reported",
+      "Push_ups_1min": "athlete-reported",
+      "Sleep_hours": "athlete-reported",
+      "Resting_heart_rate_bpm": "measured",
+      "Systolic_blood_pressure_mmhg": "measured",
+      "Mitochondria_placeholder": "dataset-imputed",
+      "Testosterone_ng_dl": "measured",
+      "Cortisol_ug_dl": "measured",
+      "Hemoglobin_g_dl": "measured",
+      "CRP_mg_l": "measured",
+      "HRV": "measured"
+    },
+    "units": {
+      "Age": "years",
+      "Height_cm": "cm",
+      "Weight_kg": "kg",
+      "Waist_circumference_cm": "cm",
+      "Emotional_stress": "1-10",
+      "Alcohol_units_per_week": "units/week",
+      "Daily_calories_kcal": "kcal/day",
+      "Max_push_ups": "repetitions",
+      "Max_pull_ups": "repetitions",
+      "Run_1km_min": "minutes",
+      "Run_100m_sec": "seconds",
+      "Cooper_test_km": "km",
+      "Burpees_3min": "repetitions",
+      "Push_ups_1min": "repetitions",
+      "Sleep_hours": "hours/day",
+      "Resting_heart_rate_bpm": "bpm",
+      "Systolic_blood_pressure_mmhg": "mmHg",
+      "Mitochondria_placeholder": "legacy_unitless_proxy",
+      "Testosterone_ng_dl": "ng/dL",
+      "Cortisol_ug_dl": "ug/dL",
+      "Hemoglobin_g_dl": "g/dL",
+      "CRP_mg_l": "mg/L",
+      "HRV": "ms"
+    }
+  },
+  "bioenergetic_state": {
+    "bai_raw": 0.019924,
+    "bai_normalized": 50.04,
+    "confidence": 0.415,
+    "uncertainty": 0.585,
+    "reconstruction_error": 0.845595,
+    "interpretation": "Experimental latent bioenergetic adaptation proxy; not a direct mitochondrial measurement."
+  },
+  "latent_states": {
+    "energy": -0.06871,
+    "recovery": 0.404769,
+    "stress": 0.178428,
+    "muscle": -0.175466,
+    "metabolism": 0.18917,
+    "aging": -0.954683
+  },
+  "latent_vector": [
+    0.453039394426056,
+    -0.394984403338635,
+    -0.04750423533614456,
+    -0.28538930822493414,
+    0.5019070095458866,
+    0.808826241363523,
+    0.33691252588488313,
+    -0.028568815945379855,
+    1.9626860017411878,
+    0.9953557878480362,
+    -0.524616368575693,
+    -1.7197145504620683,
+    0.4633876375541327,
+    -0.7204044339931812,
+    -0.35956341143848536,
+    -0.08528216500189001,
+    1.3116237763849825,
+    0.09765569742248861,
+    -0.3432232789497214,
+    -0.3093766408237263,
+    -0.8858450951292407,
+    0.6464226639206005,
+    -2.550849734998109,
+    -1.028459523844492
+  ],
+  "physiological_states": {
+    "fatigue": 38.94,
+    "recovery": 55.92,
+    "stress": 43.58,
+    "inflammation": 10.8,
+    "performance": 54.3,
+    "readiness": 60.5,
+    "adaptation": 50.04
+  },
+  "athlete_reference": {
+    "status": "partial_reference_data",
+    "cohort": "gym_members_exercise_tracking",
+    "cohort_size": 973,
+    "percentiles": {
+      "Age": 28.4,
+      "Weight_kg": 66.2,
+      "Height_cm": 76.6,
+      "Resting_heart_rate_bpm": 20.2
+    },
+    "robust_z_scores": {
+      "Age": -0.742,
+      "Weight_kg": 0.453,
+      "Height_cm": 0.749,
+      "Resting_heart_rate_bpm": -0.899
+    },
+    "limitations": [
+      "Exact upstream URL and license are absent from the repository.",
+      "Only age, height, weight and resting heart rate are comparable."
+    ]
+  },
+  "personal_baseline": {
+    "status": "insufficient_history",
+    "history_count": 0,
+    "minimum_required": 3,
+    "limitations": [
+      "No reliable personal baseline yet."
+    ]
+  },
+  "risks": [],
+  "hjb_control": {
+    "risk": 1.2090553662461296,
+    "optimal_intensity": 0.5003656502102686,
+    "daily": [
+      {
+        "day": 1,
+        "stress": 4.3611,
+        "risk": 0.16720000000000007,
+        "optimal_intensity": 1.0,
+        "recommendation": "Training risk: 0.2/10. Optimal intensity: 1.00. Low risk \u2014 normal training allowed."
+      },
+      {
+        "day": 2,
+        "stress": 4.7903,
+        "risk": 0.16720000000000007,
+        "optimal_intensity": 1.0,
+        "recommendation": "Training risk: 0.2/10. Optimal intensity: 1.00. Low risk \u2014 normal training allowed."
+      },
+      {
+        "day": 3,
+        "stress": 5.0572,
+        "risk": 0.16720000000000007,
+        "optimal_intensity": 1.0,
+        "recommendation": "Training risk: 0.2/10. Optimal intensity: 1.00. Low risk \u2014 normal training allowed."
+      },
+      {
+        "day": 4,
+        "stress": 5.3972,
+        "risk": 0.16720000000000007,
+        "optimal_intensity": 1.0,
+        "recommendation": "Training risk: 0.2/10. Optimal intensity: 1.00. Low risk \u2014 normal training allowed."
+      },
+      {
+        "day": 5,
+        "stress": 5.6601,
+        "risk": 0.18143111111111118,
+        "optimal_intensity": 1.0,
+        "recommendation": "Training risk: 0.2/10. Optimal intensity: 1.00. Low risk \u2014 normal training allowed."
+      },
+      {
+        "day": 6,
+        "stress": 5.8897,
+        "risk": 0.2018400000000001,
+        "optimal_intensity": 1.0,
+        "recommendation": "Training risk: 0.2/10. Optimal intensity: 1.00. Low risk \u2014 normal training allowed."
+      },
+      {
+        "day": 7,
+        "stress": 5.9791,
+        "risk": 0.20978666666666673,
+        "optimal_intensity": 1.0,
+        "recommendation": "Training risk: 0.2/10. Optimal intensity: 1.00. Low risk \u2014 normal training allowed."
+      }
+    ],
+    "physiological_scores": {
+      "fatigue": 49.96343497897314,
+      "recovery": 50.03656502102686,
+      "stress": 49.96343497897314,
+      "readiness": 50.03656502102686,
+      "adaptation": 50.03656502102686
+    },
+    "critical_crp_override": false,
+    "warnings": [],
+    "decision_support_only": true
+  },
+  "recommendation": {
+    "training_intensity": 0.5,
+    "training_volume": "maintain",
+    "recovery": "Prioritize sleep, hydration, and reassessment before progression.",
+    "action": "controlled_training",
+    "reason": "No critical gate; intensity is limited by recovery/readiness.",
+    "clinically_optimal": false
+  },
+  "trained_model_outputs": [
+    2066.0171508657913,
+    6.869591947353599,
+    2.6771279582394625,
+    31.85576362148508,
+    79.01412460611037,
+    62.48149026510039,
+    -6.003061316855594,
+    505.0607399140019
+  ],
+  "explanation": {
+    "positive_factors": [
+      "sleep",
+      "HRV",
+      "CRP"
+    ],
+    "negative_factors": [],
+    "dominant_features": [
+      "Sleep_hours",
+      "HRV",
+      "Emotional_stress",
+      "CRP_mg_l"
+    ],
+    "limitations": [
+      "Legacy mitochondria placeholder was imputed; it is not a measurement.",
+      "Hierarchical VAE weights are not present; latent states are proof-of-concept only.",
+      "Exact upstream URL and license are absent from the repository.",
+      "Only age, height, weight and resting heart rate are comparable."
+    ]
+  },
+  "disclaimer": "Research estimate, not a medical diagnosis."
+}

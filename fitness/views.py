@@ -15,8 +15,6 @@ from ml.emotional_drift import analyze_emotional_drift
 from ml.training_risk import predict_risk
 from ml.photo_analysis import analyze_body_proportions
 
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-
 from django.shortcuts import render
 
 def home_view(request):

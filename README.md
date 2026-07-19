@@ -1,4 +1,44 @@
 # FitAI — Physiologically Reactive AI Fitness System
+## Final athlete-assessment MVP
+
+FitAI is an athlete-specific physiological and latent bioenergetic research system.
+BAI is an experimental adaptation proxy, not a mitochondrial measurement, diagnosis,
+or clinically validated score.
+
+Flow: athlete measurements -> canonical 23 features -> trained 23x8 model plus
+six-encoder research VAE -> BAI/states -> personal/reference comparison ->
+HJB-inspired safety control -> persisted recommendation.
+
+The trained NumPy artifact is present; a saved hierarchical VAE checkpoint is not.
+Results disclose this limitation and reduce confidence.
+
+### PostgreSQL
+
+```powershell
+Copy-Item .env.example .env
+docker compose up -d db
+$env:DATABASE_URL='postgresql://fitai:replace-with-a-strong-password@localhost:5432/fitai'
+python manage.py migrate
+```
+
+Standard `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_HOST`,
+and `POSTGRES_PORT` variables are also supported. SQLite is the debug/test fallback.
+
+### Demo, arbitrary input, and tests
+
+```powershell
+python -m ml.demo_athlete_assessment --output demo_assessment_output.json
+python -m ml.demo_athlete_assessment --input athlete.json --output result.json
+python -m compileall -q fitai fitness ml tests
+python manage.py makemigrations --check --dry-run
+python manage.py check
+python -m pytest -q
+```
+
+Use `--no-persist` for a read-only assessment. See
+`docs/final_mvp_implementation.md`, `docs/datasets.md`,
+`docs/bai_interpretation.md`, and `docs/presentation_demo.md`.
+
 ## Live Demo
 https://fitai-research.onrender.com/
 

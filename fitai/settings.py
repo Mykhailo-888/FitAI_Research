@@ -1,5 +1,8 @@
 from pathlib import Path
 import os
+from urllib.parse import unquote, urlparse
+
+from django.core.exceptions import ImproperlyConfigured
 
 # =========================
 # BASE
@@ -91,12 +94,71 @@ TEMPLATES = [
 # =========================
 # DATABASE
 # =========================
-DATABASES = {
-    "default": {
+
+def _database_config_from_env():
+    database_url = os.getenv("DATABASE_URL", "").strip()
+    postgres_values = {
+        "NAME": os.getenv("POSTGRES_DB", "").strip(),
+        "USER": os.getenv("POSTGRES_USER", "").strip(),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD", ""),
+        "HOST": os.getenv("POSTGRES_HOST", "localhost").strip(),
+        "PORT": os.getenv("POSTGRES_PORT", "5432").strip(),
+    }
+
+    if database_url:
+        parsed = urlparse(database_url)
+        if parsed.scheme in {"postgres", "postgresql"}:
+            if not parsed.hostname or not parsed.path.lstrip("/"):
+                raise ImproperlyConfigured("DATABASE_URL is missing host or database")
+            return {
+                "ENGINE": "django.db.backends.postgresql",
+                "NAME": unquote(parsed.path.lstrip("/")),
+                "USER": unquote(parsed.username or ""),
+                "PASSWORD": unquote(parsed.password or ""),
+                "HOST": parsed.hostname,
+                "PORT": str(parsed.port or 5432),
+                "CONN_MAX_AGE": 60,
+            }
+        if parsed.scheme == "sqlite":
+            sqlite_path = unquote(parsed.path)
+            return {
+                "ENGINE": "django.db.backends.sqlite3",
+                "NAME": sqlite_path or BASE_DIR / "db.sqlite3",
+            }
+        raise ImproperlyConfigured(
+            "DATABASE_URL must use postgresql://, postgres://, or sqlite://"
+        )
+
+    if postgres_values["NAME"]:
+        missing = [
+            key
+            for key in ("USER", "PASSWORD")
+            if not postgres_values[key]
+        ]
+        if missing:
+            raise ImproperlyConfigured(
+                "Missing PostgreSQL environment values: "
+                + ", ".join(f"POSTGRES_{key}" for key in missing)
+            )
+        return {
+            "ENGINE": "django.db.backends.postgresql",
+            **postgres_values,
+            "CONN_MAX_AGE": 60,
+        }
+
+    if not DEBUG:
+        raise ImproperlyConfigured(
+            "Production requires DATABASE_URL or POSTGRES_DB, "
+            "POSTGRES_USER, and POSTGRES_PASSWORD"
+        )
+
+    return {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
-}
+
+
+DATABASES = {"default": _database_config_from_env()}
 
 
 # =========================
