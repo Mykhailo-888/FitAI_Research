@@ -1,0 +1,21 @@
+metric,value
+dataset_count,3
+total_records,2919
+valid_records,1946
+rejected_records,973
+missing_value_rate,0.2753623188405797
+imputation_rate,0.0
+legacy_execution_success_rate,1.0
+new_execution_success_rate,1.0
+mean_output_difference,0.0
+median_output_difference,0.0
+compatible_output_correlations,"[1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]"
+risk_gate_activation_counts,"{""Critical CRP safety override: pause training and obtain qualified clinical guidance."": 990, ""Severe fatigue/stress gate: recovery session only."": 225, ""High systolic blood-pressure safety gate: no intense training."": 18, ""Low BAI physiological readiness gate applied."": 356, ""Low HRV safety gate applied."": 88}"
+bai_distribution,"{""count"": 1946, ""mean"": 50.24660328879753, ""median"": 50.35, ""min"": 49.16, ""max"": 50.72}"
+latent_state_distributions,"{""energy"": {""count"": 1946, ""mean"": -0.049630213771839675, ""median"": -0.0485985, ""min"": -0.088224, ""max"": -0.019125}, ""recovery"": {""count"": 1946, ""mean"": 0.40944275025693727, ""median"": 0.418891, ""min"": 0.349093, ""max"": 0.425463}, ""stress"": {""count"": 1946, ""mean"": 0.18997966700924973, ""median"": 0.192913, ""min"": 0.145924, ""max"": 0.21225}, ""muscle"": {""count"": 1946, ""mean"": -0.18341044604316548, ""median"": -0.179685, ""min"": -0.209585, ""max"": -0.163308}, ""metabolism"": {""count"": 1946, ""mean"": 0.16401622404933194, ""median"": 0.132793, ""min"": 0.092586, ""max"": 0.325809}, ""aging"": {""count"": 1946, ""mean"": -0.9562639290853031, ""median"": -0.956519, ""min"": -0.95857, ""max"": -0.950235}}"
+confidence_distribution,"{""count"": 1946, ""mean"": 0.3970000000000001, ""median"": 0.397, ""min"": 0.397, ""max"": 0.397}"
+recommendation_distribution,"{""MEDICAL_CAUTION"": 990, ""TRAIN_LIGHT"": 912, ""ACTIVE_RECOVERY"": 38, ""REST"": 6}"
+numerical_stability,"{""sample_size"": 50, ""perturbation"": ""HRV +1%, capped at schema maximum"", ""mean_relative_output_change"": 0.0007415573215192857, ""max_relative_output_change"": 0.001753113973225706, ""note"": ""Sensitivity/stability measure only; not interpreted as accuracy.""}"
+ground_truth_metrics,
+ground_truth_note,No documented compatible ground-truth targets exist; MAE/RMSE/R2 were not fabricated.
+datasets,"[{""name"": ""fitai_engineered_23"", ""records"": 973, ""compatible_records"": 973, ""is_real_data"": false, ""is_synthetic"": true}, {""name"": ""fitai_extended_latent"", ""records"": 973, ""compatible_records"": 973, ""is_real_data"": false, ""is_synthetic"": true}, {""name"": ""gym_members_exercise_tracking"", ""records"": 973, ""compatible_records"": 0, ""is_real_data"": true, ""is_synthetic"": false}]"

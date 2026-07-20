@@ -29,6 +29,7 @@ class Command(BaseCommand):
         total = valid = rejected = missing_cells = imputed_cells = 0
         legacy_ok = advanced_ok = 0
         differences, bais, confidence = [], [], []
+        perturbation_deltas = []
         latent_values = {name: [] for name in ("energy", "recovery", "stress", "muscle", "metabolism", "aging")}
         risks, recommendations = Counter(), Counter()
         per_dataset = []
@@ -67,6 +68,16 @@ class Command(BaseCommand):
                 for risk in advanced["risks"]:
                     risks[risk] += 1
                 recommendations[actionable_recommendation(advanced)["code"]] += 1
+                if len(perturbation_deltas) < 50:
+                    perturbed = dict(mapped)
+                    perturbed["HRV"] = min(200, perturbed["HRV"] * 1.01)
+                    perturbed_outputs = np.asarray(
+                        run_legacy_analysis(perturbed)["raw_predictions"], dtype=float
+                    )
+                    perturbation_deltas.append(float(np.mean(
+                        np.abs(perturbed_outputs - old_outputs)
+                        / (np.abs(old_outputs) + 1e-8)
+                    )))
             per_dataset.append({
                 "name": dataset.name, "records": len(frame), "compatible_records": dataset_valid,
                 "is_real_data": dataset.is_real_data, "is_synthetic": dataset.is_synthetic,
@@ -87,8 +98,15 @@ class Command(BaseCommand):
             "confidence_distribution": _distribution(confidence),
             "recommendation_distribution": dict(recommendations),
             "numerical_stability": {
-                "status": "deterministic seed verified by regression tests",
-                "perturbation_evaluation": "not interpreted as accuracy",
+                "sample_size": len(perturbation_deltas),
+                "perturbation": "HRV +1%, capped at schema maximum",
+                "mean_relative_output_change": (
+                    float(np.mean(perturbation_deltas)) if perturbation_deltas else None
+                ),
+                "max_relative_output_change": (
+                    float(np.max(perturbation_deltas)) if perturbation_deltas else None
+                ),
+                "note": "Sensitivity/stability measure only; not interpreted as accuracy.",
             },
             "ground_truth_metrics": None,
             "ground_truth_note": "No documented compatible ground-truth targets exist; MAE/RMSE/R2 were not fabricated.",

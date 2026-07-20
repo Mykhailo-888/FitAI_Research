@@ -120,9 +120,14 @@ def validate_athlete_input(payload: Mapping[str, Any]) -> tuple[dict, dict]:
     return canonical, quality
 
 
-def _reference(features: Mapping[str, float]) -> dict:
+@lru_cache(maxsize=1)
+def _reference_frame() -> pd.DataFrame:
     path = ROOT / "data" / "gym_members_exercise_tracking.csv"
-    frame = pd.read_csv(path)
+    return pd.read_csv(path)
+
+
+def _reference(features: Mapping[str, float]) -> dict:
+    frame = _reference_frame()
     mappings = {
         "Age": "Age", "Weight_kg": "Weight (kg)",
         "Height_cm": "Height (m)", "Resting_heart_rate_bpm": "Resting_BPM",

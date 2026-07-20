@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from time import perf_counter
 from typing import Any, Mapping
+from functools import lru_cache
 
 import numpy as np
 from django.db import transaction
@@ -25,10 +26,14 @@ PREDICTION_SCHEMA = (
     ("Waist Circumference Change", "cm"), ("Testosterone Projection", "ng/dL"),
 )
 
+@lru_cache(maxsize=1)
+def _legacy_model():
+    return get_fitness_model("simple")
+
 
 def run_legacy_analysis(features: Mapping[str, float]) -> dict[str, Any]:
     """Callable legacy entry point extracted from the original Django view."""
-    model = get_fitness_model("simple")
+    model = _legacy_model()
     values = np.array([[features[name] for name in CANONICAL_FEATURES]], dtype=float)
     predictions = model.predict(values)[0]
     crp, hrv = features["CRP_mg_l"], features["HRV"]
