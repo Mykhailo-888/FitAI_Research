@@ -1,4 +1,13 @@
 # FitAI — Physiologically Reactive AI Fitness System
+## Reviewer guide
+
+- **Current research code (`research-current`)** — the advanced FitAI research MVP with latent-state and BAI assessment, architecture comparison, PostgreSQL persistence, evaluation workflow, and 54 passing tests.
+- **Stable live demo (`main`)** — the verified baseline currently deployed on Render:  
+  https://fitai-research.onrender.com/
+- **Deployment status** — the advanced research branch is kept separate from the public demo until its Docker/PostgreSQL deployment and prospective athlete validation are completed.
+
+> The live demo demonstrates the stable FitAI baseline.  
+> The default `research-current` branch contains the latest research architecture referenced in the project presentation.
 ## Final athlete-assessment MVP
 
 FitAI is an athlete-specific physiological and latent bioenergetic research system.
