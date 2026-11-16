@@ -78,7 +78,7 @@ class FitnessNeuralNet:
         H = X_norm @ self.E
         a1 = self._activation(H @ self.W1 + self.b1)
         y_raw = a1 @ self.W_out + self.b_out
-        y_pred = self._apply_output_constraints(y_raw)
+        y_pred = y_raw
         return y_pred, a1, H, y_raw
 
     # ================= FIT =================
@@ -132,13 +132,8 @@ class FitnessNeuralNet:
             error = y_pred - y_norm
             loss = np.mean(error ** 2)
 
-            # Backpropagation з урахуванням обмежень на виходах
-            y_raw_grad = np.ones_like(y_pred)
-            for i in [0, 1, 2, 3, 4, 5, 7]:  # softplus
-                y_raw_grad[:, i] = 1 / (1 + np.exp(-y_raw[:, i]))
-            y_raw_grad[:, 6] = (1 - np.tanh(y_raw[:, 6]) ** 2) * 50  # tanh для талії
-
-            grad_out = (2 * error / n_samples) * y_raw_grad
+            # Градієнт MSE для лінійних нормалізованих виходів
+            grad_out = 2.0 * error / error.size
 
             grad_W_out = a1.T @ grad_out
             grad_b_out = grad_out.sum(axis=0)
