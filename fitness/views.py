@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.core.files.storage import default_storage
 from django.conf import settings
+from django.http import HttpResponseBadRequest
 
 from .models import UserData
 from ml.fit_model_core import get_fitness_model
@@ -26,32 +27,56 @@ def home_view(request):
 # -----------------------------
 def validate_input(value, dtype, question):
     try:
-        if dtype == "int":
-            val = int(value)
-        elif dtype == "float":
-            val = float(value)
-        else:
+        if dtype not in ("int", "float"):
             return value, None
-    except (ValueError, TypeError):
+
+        val = float(value)
+
+        if not np.isfinite(val):
+            return None, f"{question} must be a finite number"
+
+        if dtype == "int":
+            if not val.is_integer():
+                return None, f"{question} must be a whole number"
+            val = int(val)
+
+    except (ValueError, TypeError, OverflowError):
         return None, f"Invalid number format for {question}"
 
     ranges = {
-        "Age": (16, 100), "Height": (100, 250), "Weight": (30, 300),
-        "Waist circumference": (40, 200), "Emotional stress": (1, 10),
-        "Alcohol (units/week)": (0, 100), "Max push-ups": (0, 500),
-        "Max pull-ups": (0, 100), "1 km run": (3, 30), "100 m run": (10, 60),
-        "Cooper test": (1, 20), "Burpees in 3 min": (0, 200),
-        "Push-ups in 1 min": (0, 100), "Sleep": (0, 24),
-        "Resting heart rate": (30, 120), "Systolic blood pressure": (80, 200),
-        "HRV": (0, 200), "Mitochondria (placeholder)": (0, 1000),
-        "Testosterone": (0, 2000), "Cortisol": (0, 100),
-        "Hemoglobin": (0, 25), "CRP": (0, 100)
+        "Age": (16, 100),
+        "Height": (100, 250),
+        "Weight": (30, 300),
+        "Waist circumference": (40, 200),
+        "Emotional stress": (1, 10),
+        "Alcohol (units/week)": (0, 100),
+        "Max push-ups": (0, 500),
+        "Max pull-ups": (0, 100),
+        "1 km run": (3, 30),
+        "100 m run": (10, 60),
+        "Cooper test": (1, 20),
+        "Burpees in 3 min": (0, 200),
+        "Push-ups in 1 min": (0, 100),
+        "Sleep": (0, 24),
+        "Resting heart rate": (30, 120),
+        "Systolic blood pressure": (80, 200),
+        "HRV": (0, 200),
+        "Mitochondria (placeholder)": (0, 1000),
+        "Testosterone": (0, 2000),
+        "Cortisol": (0, 100),
+        "Hemoglobin": (0, 25),
+        "CRP": (0, 100),
     }
+
+    if question == "Daily calories (kcal/day)" and val <= 0:
+        return None, "Daily calories must be greater than zero"
 
     if question in ranges:
         min_val, max_val = ranges[question]
-        if not (min_val <= val <= max_val):
-            return None, f"{question} must be between {min_val} and {max_val}"
+        if not min_val <= val <= max_val:
+            return None, (
+                f"{question} must be between {min_val} and {max_val}"
+            )
 
     return val, None
 
@@ -87,7 +112,13 @@ def onboarding(request):
         ("CRP", "mg/L", "float", False),
     ]
 
-    current_index = int(request.GET.get('q', 0))
+     try:
+        current_index = int(request.GET.get('q', 0))
+    except (ValueError, TypeError):
+        return HttpResponseBadRequest("Invalid question index")
+
+    if not 0 <= current_index < len(questions):
+        return HttpResponseBadRequest("Invalid question index")
 
     # Ініціалізуємо onboarding_data, якщо його немає
     if 'onboarding_data' not in request.session:
