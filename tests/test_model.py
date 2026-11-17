@@ -140,3 +140,21 @@ def test_combined_poor_recovery(model, base_input):
 
     assert bad_pred[6] < base_pred[6] or bad_pred[7] < base_pred[7], \
         "Poor recovery state should negatively affect waist/testosterone"
+
+
+def test_forward_preserves_negative_standardized_outputs():
+    """Нормалізовані прогнози можуть бути нижчими за нуль."""
+    model = FitnessNeuralNet()
+
+    model.E = np.zeros((23, 48))
+    model.W1 = np.zeros((48, 32))
+    model.b1 = np.zeros(32)
+    model.W_out = np.zeros((32, 8))
+    model.b_out = np.array([
+        -2.0, -1.0, -0.5, 0.0, 0.5, 1.0, -1.0, 2.0
+    ])
+
+    prediction, _, _, _ = model._forward(np.zeros((1, 23)))
+
+    assert prediction.shape == (1, 8)
+    np.testing.assert_allclose(prediction[0], model.b_out)
