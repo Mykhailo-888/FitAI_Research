@@ -3,6 +3,7 @@ from django.utils import timezone
 
 class UserData(models.Model):
     timestamp = models.DateTimeField(default=timezone.now)
+    browser_scope = models.UUIDField(null=True, blank=True, db_index=True)
 
     # 23 параметри
     age = models.FloatField(null=True, blank=True)
@@ -10,6 +11,9 @@ class UserData(models.Model):
     weight_kg = models.FloatField(null=True, blank=True)
     waist_circumference_cm = models.FloatField(null=True, blank=True)
     emotional_stress = models.FloatField(null=True, blank=True)
+    predicted_stress_7d = models.FloatField(null=True, blank=True)
+    input_sources = models.JSONField(default=dict, blank=True)
+    
     alcohol_units_per_week = models.FloatField(null=True, blank=True)
     daily_calories_kcal = models.FloatField(null=True, blank=True)
     max_push_ups = models.FloatField(null=True, blank=True)
