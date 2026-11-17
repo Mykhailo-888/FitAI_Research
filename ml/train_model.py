@@ -7,11 +7,15 @@ from pathlib import Path
 from sklearn.model_selection import train_test_split
 
 from ml.fit_model_core import FitnessNeuralNet
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Відтворюваний шум під час генерації навчальних відповідей
+np.random.seed(42)
 
 print("=== Training Fitness Model (PHYSICS-BASED TARGETS) ===")
 
 # ================= LOAD DATA =================
-dataset_path = r"C:\FitAI_Research\data\edited_23_params_realistic.csv"
+dataset_path = BASE_DIR / "data" / "edited_23_params_realistic.csv"
 df = pd.read_csv(dataset_path)
 
 print(f"Using dataset: {os.path.basename(dataset_path)} | Shape: {df.shape}")
@@ -127,7 +131,7 @@ print("Training started...")
 model.fit(X_train, y_train, X_val, y_val)
 
 # ================= SAVE MODEL =================
-model_path = Path(r"C:\FitAI_Research\ml\models\trained_fitness_model_simple.pkl")
+model_path = BASE_DIR / "ml" / "models" / "trained_fitness_model_simple.pkl"
 model.save_model(str(model_path))
 print(f"✅ Model successfully saved: {model_path}")
 
@@ -145,7 +149,7 @@ history = {
     "notes": "physics-based targets with improved waist logic (more negative waist)"
 }
 
-history_path = Path(r"C:\FitAI_Research\ml\training_history.json")
+history_path = BASE_DIR / "ml" / "training_history.json"
 history_path.parent.mkdir(parents=True, exist_ok=True)
 
 with open(history_path, "w", encoding="utf-8") as f:
@@ -230,7 +234,7 @@ explain_data = {
     "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 }
 
-explain_path = Path(r"C:\FitAI_Research\ml\feature_importance.json")
+explain_path = BASE_DIR / "ml" / "feature_importance.json"
 with open(explain_path, "w", encoding="utf-8") as f:
     json.dump(explain_data, f, indent=4)
 
