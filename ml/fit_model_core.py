@@ -183,8 +183,12 @@ class FitnessNeuralNet:
             if it % val_every == 0 or it == self.n_iters:
                 print(f"Iter {it:5d} | Loss: {loss:.6f} | Best val: {self.best_val_loss:.6f}")
 
-        print("Training finished. Best val loss:", self.best_val_loss)
+        # Відновлюємо найкращі ваги після завершення циклу
+        if self.best_params is not None:
+            for k, v in self.best_params.items():
+                setattr(self, k, v.copy())
 
+        print("Training finished. Best val loss:", self.best_val_loss)
     # ================= PREDICT =================
     def predict(self, X):
         X = np.asarray(X, dtype=float)
