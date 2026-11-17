@@ -407,18 +407,44 @@ def process_onboarding_results(request):
             model_error = f"Не вдалося отримати передбачення: {type(e).__name__} – {str(e)}"
             pred = np.zeros((1, 8))
             explainability = []
-
         prediction_with_labels = []
         for i, (label, unit) in enumerate(PREDICTION_LABELS):
+            if i == 6:
+                measured_waist = request.session.get(
+                    'onboarding_data', {}
+                ).get('Waist circumference')
+
+                if measured_waist not in (None, '', 'None'):
+                    prediction_with_labels.append((
+                        'Введена талія — не прогноз',
+                        'cm',
+                        round(float(measured_waist), 1)
+                    ))
+                else:
+                    prediction_with_labels.append((
+                        'Зміна талії', '', 'Прогноз недоступний'
+                    ))
+                continue
+
             try:
-                value = float(pred[0, i]) if isinstance(pred, np.ndarray) and pred.size > i else 0.0
-                value = round(value) if label in ["Calories Burned", "Max Pull-Ups", "Burpees per Hour"] else round(
-                    value, 1)
+                value = (
+                    float(pred[0, i])
+                    if isinstance(pred, np.ndarray) and pred.size > i
+                    else 0.0
+                )
+                if label in [
+                    "Calories Burned", "Max Pull-Ups", "Burpees per Hour"
+                ]:
+                    value = round(value)
+                else:
+                    value = round(value, 1)
             except:
                 value = 0.0
+
             prediction_with_labels.append((label, unit, value))
 
         prediction_list = pred[0].tolist() if isinstance(pred, np.ndarray) and pred.ndim == 2 else [0.0] * 8
+        prediction_list[6] = None
 
         # Зберігаємо в базу
         UserData.objects.create(
@@ -497,7 +523,9 @@ def history(request):
                 pred = None
         if isinstance(pred, (list, tuple)) and len(pred) == 1 and isinstance(pred[0], (list, tuple)):
             pred = pred[0]
-        values = pred if pred else [None] * 8
+        values = list(pred) if pred else [None] * 8
+        if len(values) > 6:
+            values[6] = None
 
         forecast_data.append(values)
         chart_data['calories'].append(float(values[0]) if values[0] is not None else None)
@@ -561,6 +589,8 @@ def metrics(request):
     results = {}
 
     for i in range(8):
+        if i == 6:
+            continue
 
         prev_vals = []
 
