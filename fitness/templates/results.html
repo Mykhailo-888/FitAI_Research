@@ -118,9 +118,48 @@
 {% endif %}
 
 <!-- Forecast -->
+{% if stress_summary %}
+<div style="margin-bottom:30px; padding:24px; background:#f0f9ff; border-radius:12px;">
+    <h2>Стрес</h2>
+    <p>
+        <strong>Початковий стрес:</strong>
+        {{ stress_summary.initial|floatformat:1 }}/10
+        {% if stress_summary.initial_source == "default" %}
+            — за замовчуванням.
+        {% else %}
+            — введено користувачем.
+        {% endif %}
+    </p>
+    <p>
+        <strong>Прогноз стресу через 7 днів:</strong>
+        {% if stress_summary.predicted_7d != None %}
+            {{ stress_summary.predicted_7d|floatformat:1 }}/10 — оцінка Іто.
+        {% else %}
+            недоступний.
+        {% endif %}
+    </p>
+</div>
+{% endif %}
+
+{% if input_summary %}
+<details style="margin-bottom:30px; padding:24px; background:#f8fafc; border-radius:12px;">
+    <summary>Вхідні дані — стандартних значень: {{ default_count }}</summary>
+    <p>Стандартні значення є припущеннями для розрахунку, а не вимірюваннями людини.</p>
+    {% for item in input_summary %}
+        <p>
+            <strong>{{ item.name }}:</strong> {{ item.value }}
+            {% if item.source == "default" %}
+                — за замовчуванням.
+            {% else %}
+                — введено користувачем.
+            {% endif %}
+        </p>
+    {% endfor %}
+</details>
+{% endif %}
 <div style="margin-bottom: 50px;">
     <h2 style="color: #1e40af; text-align: center; margin-bottom: 24px; font-size: 28px;">
-        Forecast for the Next Week
+        Experimental assessments of the model
     </h2>
 
     <div style="background: #f0f9ff; padding: 32px; border-radius: 16px;">
