@@ -293,6 +293,28 @@ def process_onboarding_results(request):
             "Mitochondria (placeholder)": 50, "Testosterone": 500, "Cortisol": 15.0,
             "Hemoglobin": 14.5, "CRP": 1.5
         }
+        for question, index in [('Age', 0), ('Height', 1), ('Weight', 2)]:
+            if data.get(question) in (None, '', 'None'):
+                return redirect(reverse('onboarding') + f'?q={index}')
+
+        integer_questions = {
+            'Age', 'Emotional stress', 'Alcohol (units/week)',
+            'Max push-ups', 'Max pull-ups', 'Burpees in 3 min',
+            'Push-ups in 1 min', 'Resting heart rate',
+            'HRV', 'Systolic blood pressure',
+        }
+
+        for question in INPUT_FIELD_MAP:
+            raw_value = data.get(question)
+            if raw_value in (None, '', 'None'):
+                continue
+
+            dtype = 'int' if question in integer_questions else 'float'
+            value, error = validate_input(raw_value, dtype, question)
+            if error:
+                return HttpResponseBadRequest(error)
+
+            data[question] = value
         input_sources = {
             field: (
                 'default' if data.get(question) in (None, '', 'None')
