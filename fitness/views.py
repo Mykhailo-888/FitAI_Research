@@ -2,6 +2,7 @@
 from pathlib import Path
 import os
 import json
+import uuid
 import numpy as np
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -19,6 +20,14 @@ from ml.photo_analysis import analyze_body_proportions
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 from django.shortcuts import render
+def browser_scope(request):
+    token = request.session.get('fitness_history_scope')
+    try:
+        return uuid.UUID(str(token))
+    except (ValueError, TypeError, AttributeError):
+        token = uuid.uuid4()
+        request.session['fitness_history_scope'] = str(token)
+        return token
 
 def home_view(request):
     return render(request, "home.html")
@@ -490,6 +499,7 @@ def process_onboarding_results(request):
 
         # Зберігаємо в базу
         UserData.objects.create(
+            browser_scope=browser_scope(request),
             age=float(data.get("Age", 30)),
             height_cm=float(data.get("Height", 175)),
             weight_kg=float(data.get("Weight", 75)),
@@ -551,7 +561,9 @@ def update_data(request):
 
 
 def history(request):
-    records = UserData.objects.order_by('-timestamp')[:30]
+    records = UserData.objects.filter(
+        browser_scope=browser_scope(request)
+    ).order_by('-timestamp', '-pk')[:30]
     chart_timestamps = []
     chart_data = {k: [] for k in ['calories', 'run1km', 'cooper', 'pullups', 'burpees', 'run10km', 'waist_ch', 'testo']}
     forecast_data = []
@@ -611,8 +623,9 @@ def training_log_view(request):
     })
 
 def metrics(request):
-    records = list(UserData.objects.order_by('timestamp'))
-
+    records = list(UserData.objects.filter(
+        browser_scope=browser_scope(request)
+    ).order_by('timestamp', 'pk'))
     param_names = [
         "Calories Burned", "1 km Run Time", "Cooper Test", "Max Pull-Ups",
         "Burpees", "10 km Run Time", "Waist Change", "Testosterone"
