@@ -55,6 +55,30 @@ def browser_scope(request):
         token = uuid.uuid4()
         request.session['fitness_history_scope'] = str(token)
         return token
+def prediction_values(raw):
+    if isinstance(raw, str):
+        try:
+            raw = json.loads(raw)
+        except (ValueError, TypeError):
+            return [None] * 8
+
+    if isinstance(raw, (list, tuple)) and len(raw) == 1:
+        raw = raw[0]
+
+    if not isinstance(raw, (list, tuple)) or len(raw) != 8:
+        return [None] * 8
+
+    values = []
+    for value in raw:
+        try:
+            number = float(value) if value is not None else None
+        except (ValueError, TypeError, OverflowError):
+            number = None
+        values.append(number if number is not None and np.isfinite(number) else None)
+
+    values[6] = None
+    return values
+
 
 def home_view(request):
     return render(request, "home.html")
@@ -653,17 +677,7 @@ def history(request):
             for question, field in INPUT_FIELD_MAP.items()
         ]
         chart_timestamps.append(r.timestamp.strftime('%d.%m.%Y %H:%M') if r.timestamp else '—')
-        pred = r.prediction
-        if isinstance(pred, str):
-            try:
-                pred = json.loads(pred)
-            except:
-                pred = None
-        if isinstance(pred, (list, tuple)) and len(pred) == 1 and isinstance(pred[0], (list, tuple)):
-            pred = pred[0]
-        values = list(pred) if pred else [None] * 8
-        if len(values) > 6:
-            values[6] = None
+        values = prediction_values(r.prediction)
 
         forecast_data.append(values)
         chart_data['calories'].append(float(values[0]) if values[0] is not None else None)
@@ -709,132 +723,83 @@ def metrics(request):
     records = list(UserData.objects.filter(
         browser_scope=browser_scope(request)
     ).order_by('timestamp', 'pk'))
-    param_names = [
-        "Calories Burned", "1 km Run Time", "Cooper Test", "Max Pull-Ups",
-        "Burpees", "10 km Run Time", "Waist Change", "Testosterone"
-    ]
 
+    names = [
+        "Calories Burned", "1 km Run Time", "Cooper Test", "Max Pull-Ups",
+        "Burpees", "10 km Run Time", "Waist Change", "Testosterone",
+    ]
     if len(records) < 2:
         return render(request, 'metrics.html', {
-            'results': {},
-            'warning': 'Not enough data'
+            'results': {}, 'warning': 'Недостатньо записів для порівняння.',
         })
 
-    last_pred = records[-1].prediction
-
-    if isinstance(last_pred, list) and len(last_pred) == 1:
-        last_pred = last_pred[0]
-
+    forecasts = [prediction_values(rec.prediction) for rec in records]
     results = {}
-
-    for i in range(8):
-        if (
-            i == 6
-            or not isinstance(last_pred, (list, tuple))
-            or len(last_pred) != 8
-            or last_pred[i] is None
-        ):
+    for i, name in enumerate(names):
+        current = forecasts[-1][i]
+        if i == 6 or current is None:
             continue
-        prev_vals = []
 
-        for rec in records[:-1]:
-            pred = rec.prediction
+        previous = [p[i] for p in forecasts[:-1] if p[i] is not None]
+        mean = float(np.mean(previous)) if previous else None
+        std = float(np.std(previous)) if len(previous) >= 2 else None
+        drift = abs(current - mean) / std if std is not None and std > 1e-8 else None
 
-            if isinstance(pred, list) and len(pred) == 1:
-                pred = pred[0]
-
-            if pred and len(pred) > i and pred[i] is not None:
-                prev_vals.append(float(pred[i]))
-
-        current = float(last_pred[i])
-
-        # =========================
-        # STABILITY (FIXED / NORMALIZED)
-        # =========================
-
-        prev_vals = []
-
-        for rec in records[:-1]:
-            pred = rec.prediction
-
-            if isinstance(pred, list) and len(pred) == 1:
-                pred = pred[0]
-
-            if pred and len(pred) > i and pred[i] is not None:
-                prev_vals.append(float(pred[i]))
-
-        current = float(last_pred[i])
-
-        if len(prev_vals) >= 2:
-            arr = np.array(prev_vals)
-
-            stability_mean = float(np.mean(arr))
-            stability_std = float(np.std(arr))
-
-            # 🔥 ВАЖЛИВО: нормалізований drift (КЛЮЧ ДО ВСЬОГО)
-            stability_drift = abs(current - stability_mean) / (stability_std + 1e-8)
-
-        else:
-            stability_mean = 0.0
-            stability_std = 0.0
-            stability_drift = 0.0
-
-        # =========================
-        # SYNTHETIC
-        # =========================
-        syn_vals = []
-
+        synthetic = []
         for rec in records:
-            x = {
-                "sleep": float(getattr(rec, 'sleep_hours', 7.0)),
-                "hrv": float(getattr(rec, 'hrv', 70.0)),
-                "stress": float(getattr(rec, 'emotional_stress', 5.0)),
-                "weight": float(getattr(rec, 'weight_kg', 75.0)),
-            }
+            try:
+                x = {
+                    'sleep': float(rec.sleep_hours),
+                    'hrv': float(rec.hrv),
+                    'stress': float(rec.emotional_stress),
+                    'weight': float(rec.weight_kg),
+                    'crp': float(rec.crp_mg_l),
+                }
+            except (TypeError, ValueError, OverflowError):
+                continue
+            if not all(np.isfinite(value) for value in x.values()):
+                continue
+            synthetic.append(synthetic_ground_truth(x, i))
 
-            syn_vals.append(synthetic_ground_truth(x, i))
+        syn_mean = float(np.mean(synthetic)) if synthetic else None
+        syn_std = float(np.std(synthetic)) if synthetic else None
+        syn_drift = (
+            abs(current - syn_mean) / syn_std
+            if syn_std is not None and syn_std > 1e-8 else None
+        )
 
-        syn_vals = np.array(syn_vals)
+        score = None
+        if drift is not None and syn_drift is not None:
+            stability_penalty = min(drift * 2 + std * 3, 100)
+            synthetic_penalty = min(syn_drift * 1.5, 100)
+            score = max(0, min(100, 100 - (
+                0.6 * stability_penalty + 0.4 * synthetic_penalty
+            )))
 
-        synthetic_mean = float(np.mean(syn_vals))
-        synthetic_std = float(np.std(syn_vals))
-        synthetic_drift = abs(current - synthetic_mean) / (synthetic_std + 1e-8)
-
-        # =========================
-        # MODEL HEALTH SCORE
-        # =========================
-        stability_penalty = min(stability_drift * 2 + stability_std * 3, 100)
-        synthetic_penalty = min(synthetic_drift * 1.5, 100)
-
-        model_health_score = 100 - (0.6 * stability_penalty + 0.4 * synthetic_penalty)
-        model_health_score = max(0, min(100, model_health_score))
-
-        # =========================
-        # SAVE
-        # =========================
-        results[param_names[i]] = {
-            "last_pred": round(current, 2),
-            "count": len(prev_vals),
-
-            # stability
-            "stability_mean": round(stability_mean, 2),
-            "stability_std": round(stability_std, 2),
-            "stability_drift": round(stability_drift, 2),
-
-            # synthetic
-            "synthetic_mean": round(synthetic_mean, 2),
-            "synthetic_std": round(synthetic_std, 2),
-            "synthetic_drift": round(synthetic_drift, 2),
-
-            # ⭐ FINAL SCORE
-            "model_health_score": round(model_health_score, 1),
+        values = {
+            'last_pred': current,
+            'stability_mean': mean,
+            'stability_std': std,
+            'stability_drift': drift,
+            'synthetic_mean': syn_mean,
+            'synthetic_std': syn_std,
+            'synthetic_drift': syn_drift,
         }
+        results[name] = {
+            key: round(value, 2) if value is not None else None
+            for key, value in values.items()
+        }
+        results[name]['count'] = len(previous)
+        results[name]['synthetic_count'] = len(synthetic)
+        results[name]['model_health_score'] = round(score, 1) if score is not None else None
 
     return render(request, 'metrics.html', {
         'results': results,
-        'warning': 'Model Stability + Synthetic Simulation + Health Score'
+        'warning': (
+            'Це евристичні порівняння, а не перевірена точність моделі. '
+            'При нульовій дисперсії нормований дрейф недоступний.'
+        ),
     })
-
 def synthetic_ground_truth(x, i):
     """Проста, але стабільна synthetic функція"""
     sleep = x.get("sleep", 7.0)
