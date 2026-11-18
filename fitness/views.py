@@ -20,6 +20,33 @@ from ml.photo_analysis import analyze_body_proportions
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 from django.shortcuts import render
+INPUT_FIELD_MAP = {
+    'Age': 'age',
+    'Height': 'height_cm',
+    'Weight': 'weight_kg',
+    'Waist circumference': 'waist_circumference_cm',
+    'Emotional stress': 'emotional_stress',
+    'Alcohol (units/week)': 'alcohol_units_per_week',
+    'Daily calories (kcal/day)': 'daily_calories_kcal',
+    'Max push-ups': 'max_push_ups',
+    'Max pull-ups': 'max_pull_ups',
+    '1 km run': 'run_1km_min',
+    '100 m run': 'run_100m_sec',
+    'Cooper test': 'cooper_test_km',
+    'Burpees in 3 min': 'burpees_3min',
+    'Push-ups in 1 min': 'push_ups_1min',
+    'Sleep': 'sleep_hours',
+    'Resting heart rate': 'resting_heart_rate_bpm',
+    'Systolic blood pressure': 'systolic_blood_pressure_mmhg',
+    'Mitochondria (placeholder)': 'mitochondria_placeholder',
+    'Testosterone': 'testosterone_ng_dl',
+    'Cortisol': 'cortisol_ug_dl',
+    'Hemoglobin': 'hemoglobin_g_dl',
+    'CRP': 'crp_mg_l',
+    'HRV': 'hrv',
+}
+
+
 def browser_scope(request):
     token = request.session.get('fitness_history_scope')
     try:
@@ -266,7 +293,13 @@ def process_onboarding_results(request):
             "Mitochondria (placeholder)": 50, "Testosterone": 500, "Cortisol": 15.0,
             "Hemoglobin": 14.5, "CRP": 1.5
         }
-
+        input_sources = {
+            field: (
+                'default' if data.get(question) in (None, '', 'None')
+                else 'reported'
+            )
+            for question, field in INPUT_FIELD_MAP.items()
+        }
         for key, val in defaults.items():
             if key not in data or data.get(key) in (None, '', 'None', None):
                 data[key] = val
@@ -506,6 +539,7 @@ def process_onboarding_results(request):
             waist_circumference_cm=float(data.get("Waist circumference", 90)),
             emotional_stress=initial_stress,
             predicted_stress_7d=predicted_stress,
+            input_sources=input_sources,
             alcohol_units_per_week=alcohol_units,
             daily_calories_kcal=float(data.get("Daily calories (kcal/day)", 2500)),
             max_push_ups=int(data.get("Max push-ups", 20)),
