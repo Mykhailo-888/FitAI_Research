@@ -471,7 +471,9 @@ def process_onboarding_results(request):
             print("INPUT FEATURES TO MODEL:", data_values)
 
             data_array = np.array(data_values).reshape(1, -1)
-            pred = model.predict(data_array)
+            pred = np.asarray(model.predict(data_array), dtype=float)
+            if pred.shape != (1, 8) or not np.isfinite(pred).all():
+                raise ValueError("Invalid model output")
 
             try:
                 base_pred = pred[0].copy()
@@ -488,8 +490,9 @@ def process_onboarding_results(request):
                 explainability = []
 
         except Exception as e:
-            model_error = f"Не вдалося отримати передбачення: {type(e).__name__} – {str(e)}"
-            pred = np.zeros((1, 8))
+            print("Fitness model prediction failed:", type(e).__name__, str(e))
+            model_error = "Прогноз моделі недоступний. Вхідні дані збережено без прогнозу."
+            pred = None
             explainability = []
         prediction_with_labels = []
         for i, (label, unit) in enumerate(PREDICTION_LABELS):
@@ -510,24 +513,23 @@ def process_onboarding_results(request):
                     ))
                 continue
 
-            try:
-                value = (
-                    float(pred[0, i])
-                    if isinstance(pred, np.ndarray) and pred.size > i
-                    else 0.0
+            if pred is None:
+                prediction_with_labels.append(
+                    (label, '', 'Прогноз недоступний')
                 )
-                if label in [
-                    "Calories Burned", "Max Pull-Ups", "Burpees per Hour"
-                ]:
-                    value = round(value)
-                else:
-                    value = round(value, 1)
-            except:
-                value = 0.0
+                continue
+
+            value = float(pred[0, i])
+            if label in ["Calories Burned", "Max Pull-Ups", "Burpees per Hour"]:
+                value = round(value)
+            else:
+                value = round(value, 1)
 
             prediction_with_labels.append((label, unit, value))
 
-        prediction_list = pred[0].tolist() if isinstance(pred, np.ndarray) and pred.ndim == 2 else [0.0] * 8
+        prediction_list = (
+            pred[0].tolist() if pred is not None else [None] * 8
+        )
         prediction_list[6] = None
 
         # Зберігаємо в базу
@@ -578,7 +580,7 @@ def process_onboarding_results(request):
     except Exception as e:
         print("!!! CRITICAL ERROR in process_onboarding_results:", str(e))
         return render(request, 'results.html', {
-            'prediction_with_labels': [("Error", "", 0)] * 8,
+            'prediction_with_labels': [],
             'weekly_plan': {},
             'recommendations': f"Помилка обробки даних:\n• {str(e)}",
             'model_error': f"CRITICAL ERROR: {str(e)}",
@@ -679,9 +681,13 @@ def metrics(request):
     results = {}
 
     for i in range(8):
-        if i == 6:
+        if (
+            i == 6
+            or not isinstance(last_pred, (list, tuple))
+            or len(last_pred) != 8
+            or last_pred[i] is None
+        ):
             continue
-
         prev_vals = []
 
         for rec in records[:-1]:
