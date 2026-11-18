@@ -74,21 +74,47 @@ html {
                         <th style="padding:16px;">Waist (cm)</th>
                         <th style="padding:16px;">HRV</th>
                         <th style="padding:16px;">Sleep (h)</th>
-                        <th style="padding:16px;">Stress</th>
+                        <th style="padding:16px;">Початковий стрес</th>
+                        <th style="padding:16px;">Прогноз стресу через 7 днів</th>
                         <th style="padding:16px;">CRP</th>
+                        <th style="padding:16px;">Джерела даних</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for record in records %}
-                    <tr style="border-bottom:1px solid #e5e7eb; background:{% cycle '#ffffff' '#f9fafb' %}">
+                    <tr style="border-bottom:1px solid #e5e7eb;">
                         <td style="padding:16px;">{{ record.timestamp|date:"d.m.Y H:i" }}</td>
-                        <td style="padding:16px;">{{ record.age|default:"—" }}</td>
-                        <td style="padding:16px;">{{ record.weight_kg|default:"—" }}</td>
-                        <td style="padding:16px;">{{ record.waist_circumference_cm|default:"—" }}</td>
-                        <td style="padding:16px;">{{ record.hrv|default:"—" }}</td>
-                        <td style="padding:16px;">{{ record.sleep_hours|default:"—" }}</td>
-                        <td style="padding:16px;">{{ record.emotional_stress|default:"—" }}</td>
-                        <td style="padding:16px;">{{ record.crp_mg_l|default:"—" }}</td>
+                        <td style="padding:16px;">{{ record.age|default_if_none:"—" }}</td>
+                        <td style="padding:16px;">{{ record.weight_kg|default_if_none:"—" }}</td>
+                        <td style="padding:16px;">
+                            {{ record.waist_circumference_cm|default_if_none:"—" }}
+                            {% if record.input_sources.waist_circumference_cm == "default" %}
+                                <small>(за замовчуванням)</small>
+                            {% endif %}
+                        </td>
+                        <td style="padding:16px;">{{ record.hrv|default_if_none:"—" }}</td>
+                        <td style="padding:16px;">{{ record.sleep_hours|default_if_none:"—" }}</td>
+                        <td style="padding:16px;">{{ record.emotional_stress|default_if_none:"невідомий" }}</td>
+                        <td style="padding:16px;">{{ record.predicted_stress_7d|default_if_none:"недоступний" }}</td>
+                        <td style="padding:16px;">{{ record.crp_mg_l|default_if_none:"—" }}</td>
+                        <td style="padding:16px; text-align:left;">
+                            <details>
+                                <summary>Джерела 23 входів</summary>
+                                {% for item in record.input_details %}
+                                    <p>
+                                        <strong>{{ item.name }}:</strong>
+                                        {{ item.value|default_if_none:"невідомо" }}
+                                        {% if item.source == "default" %}
+                                            — за замовчуванням.
+                                        {% elif item.source == "reported" %}
+                                            — введено користувачем.
+                                        {% else %}
+                                            — джерело невідоме.
+                                        {% endif %}
+                                    </p>
+                                {% endfor %}
+                            </details>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
