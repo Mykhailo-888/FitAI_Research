@@ -112,7 +112,7 @@ def onboarding(request):
         ("CRP", "mg/L", "float", False),
     ]
 
-     try:
+    try:
         current_index = int(request.GET.get('q', 0))
     except (ValueError, TypeError):
         return HttpResponseBadRequest("Invalid question index")
