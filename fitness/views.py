@@ -621,6 +621,15 @@ def history(request):
     forecast_data = []
 
     for r in records:
+        sources = r.input_sources if isinstance(r.input_sources, dict) else {}
+        r.input_details = [
+            {
+                'name': question,
+                'value': getattr(r, field),
+                'source': sources.get(field, 'legacy_unknown'),
+            }
+            for question, field in INPUT_FIELD_MAP.items()
+        ]
         chart_timestamps.append(r.timestamp.strftime('%d.%m.%Y %H:%M') if r.timestamp else '—')
         pred = r.prediction
         if isinstance(pred, str):
