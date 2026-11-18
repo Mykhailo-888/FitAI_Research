@@ -574,7 +574,23 @@ def process_onboarding_results(request):
             'recommendations': recommendations_text,
             'model_error': model_error,
             'explainability': explainability,
-            'feature_impact': feature_impact
+            'feature_impact': feature_impact,
+            'stress_summary': {
+                'initial': initial_stress,
+                'predicted_7d': predicted_stress,
+                'initial_source': input_sources['emotional_stress'],
+            },
+            'input_summary': [
+                {
+                    'name': question,
+                    'value': data[question],
+                    'source': input_sources[field],
+                }
+                for question, field in INPUT_FIELD_MAP.items()
+            ],
+            'default_count': sum(
+                source == 'default' for source in input_sources.values()
+            ),
         })
 
     except Exception as e:
