@@ -287,9 +287,18 @@ def process_onboarding_results(request):
 
         # ====================== EMOTIONAL DRIFT ======================
         try:
-            predicted_stress = analyze_emotional_drift(initial_stress, alcohol_units, days=7)
-        except:
-            predicted_stress = initial_stress
+            predicted_stress = float(
+                analyze_emotional_drift(initial_stress, alcohol_units, days=7)
+            )
+            if not np.isfinite(predicted_stress) or not 1 <= predicted_stress <= 10:
+                raise ValueError("Invalid stress forecast")
+        except Exception:
+            predicted_stress = None
+            recommendations.append("Прогноз стресу недоступний.")
+
+        risk_stress = (
+            initial_stress if predicted_stress is None else predicted_stress
+        )
 
         # ====================== WEEKLY TRAINING PLAN ======================
         weekly_plan = weekly_training_plan_optimizer(
@@ -319,7 +328,9 @@ def process_onboarding_results(request):
             weekly_plan['hiit_recommendation'] = "HIIT is allowed"
 
             try:
-                risk_score, risk_text, optimal_intensity = predict_risk(hrv, sleep, bp, predicted_stress, crp)
+                risk_score, risk_text, optimal_intensity = predict_risk(
+                    hrv, sleep, bp, risk_stress, crp
+                )
             except:
                 risk_score, risk_text, optimal_intensity = 5.0, "Moderate risk", 1.0
 
@@ -332,7 +343,7 @@ def process_onboarding_results(request):
             else:
                 recommendations.append("Moderate training is recommended.")
 
-        if predicted_stress >= 7.0:
+        if predicted_stress is not None and predicted_stress >= 7.0:
             recommendations.append(
                 f"Predicted emotional stress after 7 days: {predicted_stress:.1f} (initial was {initial_stress:.1f})")
             recommendations.append(
@@ -483,7 +494,8 @@ def process_onboarding_results(request):
             height_cm=float(data.get("Height", 175)),
             weight_kg=float(data.get("Weight", 75)),
             waist_circumference_cm=float(data.get("Waist circumference", 90)),
-            emotional_stress=predicted_stress,
+            emotional_stress=initial_stress,
+            predicted_stress_7d=predicted_stress,
             alcohol_units_per_week=alcohol_units,
             daily_calories_kcal=float(data.get("Daily calories (kcal/day)", 2500)),
             max_push_ups=int(data.get("Max push-ups", 20)),
