@@ -10,9 +10,10 @@
     </h1>
 
     <div style="background:#fef3c7; padding:18px 24px; border-radius:12px; margin-bottom:45px; color:#92400e; font-size:1.07rem;">
-        <strong>Evaluation Systems:</strong><br>
-        • Stability — real model behavior across sessions<br>
-        • Synthetic — physiological simulation layer (for visualization)
+        <strong>Історія змін прогнозів:</strong><br>
+        Stability — зміни прогнозів цієї браузерної сесії.<br>
+        Synthetic — порівняння з умовними формулами.
+        {% if warning %}<p>{{ warning }}</p>{% endif %}
     </div>
 
     {% if results %}
@@ -30,20 +31,20 @@
             <hr style="margin: 18px 0; border-top: 1px solid #e5e7eb;">
 
             <!-- STABILITY -->
-            <p><strong>Stability Mean:</strong> {{ m.stability_mean|default:"—" }}</p>
-            <p><strong>Stability STD:</strong> {{ m.stability_std|default:"—" }}</p>
-            <p><strong>Stability Drift:</strong> {{ m.stability_drift|default:"—" }}</p>
+            <p><strong>Stability Mean:</strong> {{ m.stability_mean|default_if_none:"недоступно" }}</p>
+            <p><strong>Stability STD:</strong> {{ m.stability_std|default_if_none:"недоступно" }}</p>
+            <p><strong>Stability Drift:</strong> {{ m.stability_drift|default_if_none:"недоступно" }}</p>
 
             <hr style="margin: 18px 0; border-top: 1px solid #e5e7eb;">
 
             <!-- SYNTHETIC -->
-            <p><strong>Synthetic Mean:</strong> {{ m.synthetic_mean }}</p>
-            <p><strong>Synthetic STD:</strong> {{ m.synthetic_std }}</p>
+            <p><strong>Synthetic Mean:</strong> {{ m.synthetic_mean|default_if_none:"недоступно" }}</p>
+            <p><strong>Synthetic STD:</strong> {{ m.synthetic_std|default_if_none:"недоступно" }}</p>
 
             <!-- 🔥 HERE IS YOUR NEW BLOCK -->
             <div style="margin-top:10px; padding:10px; background:#eef2ff; border-radius:8px;">
                 <strong>Interpretation:</strong>
-                Lower drift = higher model consistency
+                Less drift means less change in forecasts, rather than confirmation of their accuracy.
             </div>
 
             <p style="margin-top: 15px; font-size: 0.9rem; color: #6b7280;">
