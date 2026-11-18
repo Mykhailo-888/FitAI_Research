@@ -6,7 +6,65 @@
     "lr": 0.0005,
     "embedding_size": 48,
     "hidden_size": 32,
-    "best_val_loss": 0.460229207418618,
-    "timestamp": "2026-05-02 06:55:51",
-    "notes": "physics-based targets with improved waist logic (more negative waist)"
+    "best_val_loss": 0.09232591059759199,
+    "timestamp": "2026-11-17 16:03:34",
+    "notes": "Synthetic demonstration targets; linear standardized outputs; waist-change forecast unsupported.",
+    "artifact_metadata": {
+        "artifact_format": "linear-standardized-outputs-v1",
+        "source_repository": "Mykhailo-888/FitAI_Research",
+        "source_branch": "main",
+        "source_commit": "9b201274ad6bdc249d5233f2a724662a8d40f985",
+        "architecture": [
+            23,
+            48,
+            32,
+            8
+        ],
+        "input_features": [
+            "Age",
+            "Height_cm",
+            "Weight_kg",
+            "Waist_circumference_cm",
+            "Emotional_stress",
+            "Alcohol_units_per_week",
+            "Daily_calories_kcal",
+            "Max_push_ups",
+            "Max_pull_ups",
+            "Run_1km_min",
+            "Run_100m_sec",
+            "Cooper_test_km",
+            "Burpees_3min",
+            "Push_ups_1min",
+            "Sleep_hours",
+            "Resting_heart_rate_bpm",
+            "Systolic_blood_pressure_mmhg",
+            "Mitochondria_placeholder",
+            "Testosterone_ng_dl",
+            "Cortisol_ug_dl",
+            "Hemoglobin_g_dl",
+            "CRP_mg_l",
+            "HRV"
+        ],
+        "output_names": [
+            "Calories",
+            "1km_Run",
+            "Cooper",
+            "Pull_Ups",
+            "Burpees",
+            "10km_Run",
+            "Waist_Change",
+            "Testosterone"
+        ],
+        "target_kind": "synthetic formulas plus Gaussian noise; not measured longitudinal outcomes",
+        "unsupported_web_forecasts": [
+            "Waist_Change"
+        ],
+        "dataset_sha256": "257674799d1db08cc5ed007c73802c4ef8a6ae3e5d37da8adcfca92a0dc8f6c0",
+        "train_rows": 778,
+        "validation_rows": 195,
+        "target_seed": 42,
+        "best_validation_standardized_mse": 0.09232591059759199,
+        "validation_is_used_for_checkpoint_selection": true,
+        "clinical_accuracy_established": false
+    }
 }
